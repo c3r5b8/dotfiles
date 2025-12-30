@@ -434,4 +434,9 @@ else
     echo "Forge stylesheet already up to date"
 fi
 
-
+DOTFILES="$HOME/dev/dotfiles"
+if ! [[ -L ~/.gitconfig && "$(readlink ~/.config/nvim)" = "$DOTFILES/gitconfig" ]]; then
+    rm -rf ~/.gitconfig 2>/dev/null
+    ln -sf "$DOTFILES/gitconfig" ~/.gitconfig
+    echo "gitconfig -> linked"
+fi
