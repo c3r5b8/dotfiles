@@ -435,12 +435,10 @@ if [[ "$SRC_HASH" != "$DST_HASH" ]]; then
 
     mkdir -p "$FORGE_DIR"
     cp "$FORGE_SRC" "$FORGE_DST"
-else
-    echo "Forge stylesheet already up to date"
 fi
 
 DOTFILES="$HOME/dev/dotfiles"
-if ! [[ -L ~/.gitconfig && "$(readlink ~/.config/nvim)" = "$DOTFILES/gitconfig" ]]; then
+if ! [[ -L ~/.gitconfig && "$(readlink ~/.gitconfig)" = "$DOTFILES/gitconfig" ]]; then
     rm -rf ~/.gitconfig 2>/dev/null
     ln -sf "$DOTFILES/gitconfig" ~/.gitconfig
     echo "gitconfig -> linked"
