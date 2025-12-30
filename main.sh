@@ -379,7 +379,7 @@ if [[ ! -d "$WALLPAPER_DIR" ]]; then
     echo "Wallpapers installed in $WALLPAPER_DIR"
 fi
 
-dconf load / < gnome.dconf
+dconf load / < ./configs/gnome.dconf
 
 GTK3_DIR="$HOME/.config/gtk-3.0"
 GTK4_DIR="$HOME/.config/gtk-4.0"
@@ -417,7 +417,7 @@ if [[ "$GTK3_CURRENT_HASH" != "$GTK3_NEW_HASH" || "$GTK4_CURRENT_HASH" != "$GTK4
     printf '%s\n' "$GTK3_CONTENT" > "$GTK3_FILE"
 fi
 
-FORGE_SRC="forge.css"
+FORGE_SRC="./configs/forge.css"
 FORGE_DIR="$HOME/.config/forge/stylesheet/forge"
 FORGE_DST="$FORGE_DIR/stylesheet.css"
 
@@ -437,7 +437,7 @@ if [[ "$SRC_HASH" != "$DST_HASH" ]]; then
     cp "$FORGE_SRC" "$FORGE_DST"
 fi
 
-DOTFILES="$HOME/dev/dotfiles"
+DOTFILES="$HOME/dev/dotfiles/configs"
 if ! [[ -L ~/.gitconfig && "$(readlink ~/.gitconfig)" = "$DOTFILES/gitconfig" ]]; then
     rm -rf ~/.gitconfig 2>/dev/null
     ln -sf "$DOTFILES/gitconfig" ~/.gitconfig
