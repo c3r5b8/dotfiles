@@ -20,3 +20,12 @@ bash main.sh
     - [Dark green](https://t.me/addtheme/Gb0JMMgztJLeWF7Q)
     - [Light green](https://t.me/addtheme/dH0F0uMM7vifFutW)
   - Enable qt feame and hw video decoding
+
+Setup ssh keys:
+
+```bash
+mkdir -p ~/.ssh
+nano ~/.ssh/id_ed25519
+chmod 600 ~/.ssh/id_ed25519
+ssh-keygen -y -f ~/.ssh/id_ed25519 > ~/.ssh/id_ed25519.pub
+```
