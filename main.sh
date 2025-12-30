@@ -37,6 +37,11 @@ if [[ "$(cat "$FILE" 2>/dev/null)" != "$REQUIRED" ]]; then
     echo "created hostname file"
 fi
 
+if ! systemctl is-enabled --quiet sshd; then
+    sudo systemctl enable --now sshd
+    echo "enabled and started sshd"
+fi
+
 if ! rpm-ostree status --json | jq -r '
     .deployments[0]["requested-local-packages"][]?,
     .deployments[0]["requested-packages"][]?
