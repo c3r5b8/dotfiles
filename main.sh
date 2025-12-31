@@ -342,6 +342,7 @@ dconf load / <./configs/gnome.dconf
 
 create_link "$DOTFILES/nvim" "$HOME/.config/nvim"
 create_link "$DOTFILES/config.fish" "$HOME/.config/fish/config.fish"
+create_link "$DOTFILES/fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
 create_link "$DOTFILES/starship.toml" "$HOME/.config/starship.toml"
 create_link "$DOTFILES/bat_config" "$HOME/.config/bat/config"
 create_link "$DOTFILES/gtk-3.0.css" "$HOME/.config/gtk-3.0/gtk.css"
