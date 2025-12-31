@@ -152,8 +152,8 @@ switch-to-application-9=@as []
 show-extensions-notice=false
 
 [org/gnome/desktop/background]
-picture-uri='file:///var/home/c3r5b8/pictures/wallpapers/Greens.jpg'
-picture-uri-dark='file:///var/home/c3r5b8/pictures/wallpapers/Greens%20Dark.png'
+picture-uri='file:///var/home/c3r5b8/pictures/wallpapers/element/Greens.jpg'
+picture-uri-dark='file:///var/home/c3r5b8/pictures/wallpapers/element/Greens%20Dark.png'
 
 [org/gnome/Ptyxis]
 default-profile-uuid='be5c0744088b69cf21f5713569529cfd'
