@@ -1,10 +1,9 @@
 return {
-	{ -- Highlight, edit, and navigate code
+	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		main = "nvim-treesitter.configs", -- Sets main module to use for opts
-		opts = {
-			ensure_installed = {
+		config = function()
+			require("nvim-treesitter").install({
 				"bash",
 				"c",
 				"diff",
@@ -17,13 +16,24 @@ return {
 				"query",
 				"vim",
 				"vimdoc",
-			},
-			auto_install = true,
-			highlight = {
-				enable = true,
-				additional_vim_regex_highlighting = { "ruby" },
-			},
-			indent = { enable = true, disable = { "ruby" } },
-		},
+			})
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function(ev)
+					local lang = ev.match
+					local ts = require("nvim-treesitter")
+					local ok, task = pcall(ts.install, { lang }, { summary = false })
+					if ok then
+						task:wait(10000)
+					end
+					pcall(vim.treesitter.start, ev.buf, lang)
+					if lang == "ruby" then
+						vim.cmd("syntax on") -- Attempt to enable legacy syntax highlighting alongside Treesitter
+					end
+					if lang ~= "ruby" then
+						vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					end
+				end,
+			})
+		end,
 	},
 }
