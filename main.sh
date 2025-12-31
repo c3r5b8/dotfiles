@@ -340,6 +340,7 @@ download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Ele
 
 dconf load / <./configs/gnome.dconf
 
+create_link "$DOTFILES/nvim" "$HOME/.config/nvim"
 create_link "$DOTFILES/gtk-3.0.css" "$HOME/.config/gtk-3.0/gtk.css"
 create_link "$DOTFILES/gtk-4.0.css" "$HOME/.config/gtk-4.0/gtk.css"
 create_link "$DOTFILES/forge.css" "$HOME/.config/forge/stylesheet/forge/stylesheet.css"
