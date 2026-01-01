@@ -31,6 +31,7 @@ return {
 				yaml = { "yamlfmt", "yamllint" },
 				bash = { "beautysh" },
 				sh = { "shfmt" },
+				fish = { "fish_indent" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
