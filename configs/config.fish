@@ -5,6 +5,8 @@ if status is-interactive
     set -gx EDITOR nvim
     set -gx VISUAL nvim
 
+    bind ctrl-h backward-kill-word
+
     alias ll='ls -lah'
     alias gs='git status'
     alias gco='git checkout'
