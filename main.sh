@@ -231,8 +231,8 @@ if [[ -z "$HAS_FFMPEG" ]]; then
 
     echo "installed full ffmpeg"
     echo "reboot required"
-    exit 1
     RPM_JSON="$(rpm-ostree status --json)"
+    exit 1
 fi
 
 if ! flatpak remotes --columns=name | grep -qx flathub; then
@@ -244,6 +244,7 @@ install_flatpak org.gimp.GIMP
 install_flatpak org.jellyfin.JellyfinDesktop
 install_flatpak com.mikrotik.WinBox
 install_flatpak io.github.ungoogled_software.ungoogled_chromium
+install_flatpak md.obsidian.Obsidian
 
 if [[ ! -d "$HOME/.local/share/themes/adw-gtk3" ]]; then
     echo "installing adw-gtk3 theme"
