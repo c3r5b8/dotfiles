@@ -20,6 +20,8 @@ bash main.sh
     - [Dark green](https://t.me/addtheme/Gb0JMMgztJLeWF7Q)
     - [Light green](https://t.me/addtheme/dH0F0uMM7vifFutW)
   - Enable qt feame and hw video decoding, disable "Draw attention to the window"
+- Setup syncthing
+  - [local](http://localhost:8384/), [sargas](https://syncthing.c3r5b8.dev/)
 
 Setup ssh keys:
 

@@ -284,6 +284,10 @@ if command -v tailscale >/dev/null 2>&1; then
     enable_service tailscaled
 fi
 
+if command -v syncthing >/dev/null 2>&1; then
+    enable_service syncthing@c3r5b8
+fi
+
 if command -v fish >/dev/null 2>&1; then
     FISH_PATH="$(command -v fish)"
     CURRENT_SHELL="$(getent passwd "$USER" | cut -d: -f7)"
