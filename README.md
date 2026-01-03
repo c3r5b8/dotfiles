@@ -12,14 +12,14 @@ bash main.sh
 - Setup firefox
   - Log In
   - Setup DarkReader
-  - Firefox settings (TODO: Find a way to save them)
+  - Firefox settings
   - Setup Bitwarden
 - Setup telegram
   - Log in
   - Install themes:
     - [Dark green](https://t.me/addtheme/Gb0JMMgztJLeWF7Q)
     - [Light green](https://t.me/addtheme/dH0F0uMM7vifFutW)
-  - Enable qt feame and hw video decoding
+  - Enable qt feame and hw video decoding, disable "Draw attention to the window"
 
 Setup ssh keys:
 
