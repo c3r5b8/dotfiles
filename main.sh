@@ -41,13 +41,16 @@ download_from_github() {
     local regex="$2"
     local url
 
-    url="$(curl -fsSL "$api" |
-        jq -r ".assets[].browser_download_url | select(test(\"$regex\"))" |
-        head -n1)"
+    url="$(
+        curl -fsSL "$api" |
+            grep -E "browser_download_url.*$regex" |
+            head -n1 |
+            cut -d '"' -f 4
+    )"
 
     [[ -n "$url" ]] || die "No GitHub asset matched: $regex"
 
-    curl -LO "$url"
+    curl -fL -O "$url"
 }
 
 add_repo() {
@@ -228,6 +231,7 @@ if [[ -z "$HAS_FFMPEG" ]]; then
 
     echo "installed full ffmpeg"
     echo "reboot required"
+    exit 1
     RPM_JSON="$(rpm-ostree status --json)"
 fi
 
@@ -305,12 +309,14 @@ for EXT in "${EXTENSIONS[@]}"; do
     if ! grep -qx "$EXT" <<<"$INSTALLED_EXTENSIONS"; then
         echo "Installing GNOME extension: $EXT"
 
-        gdbus call --session \
+        if ! gdbus call --session \
             --dest org.gnome.Shell.Extensions \
             --object-path /org/gnome/Shell/Extensions \
             --method org.gnome.Shell.Extensions.InstallRemoteExtension \
             "$EXT" \
-            >/dev/null
+            >/dev/null 2>&1; then
+            echo "note: extension $EXT may require user interaction"
+        fi
     fi
 done
 
