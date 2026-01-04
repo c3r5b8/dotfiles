@@ -1,6 +1,6 @@
 return {
 	{
-		"Mofiqul/adwaita.nvim",
+		"c3r5b8/adwaita.nvim",
 		lazy = false,
 		priority = 1000,
 
