@@ -20,6 +20,17 @@ return {
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function(ev)
 					local lang = ev.match
+					local ignore_patterns = {
+						"org",
+						"fidget",
+						"blink",
+						"telescope",
+					}
+					for _, pattern in ipairs(ignore_patterns) do
+						if lang:find(pattern) then
+							return
+						end
+					end
 					local ts = require("nvim-treesitter")
 					local ok, task = pcall(ts.install, { lang }, { summary = false })
 					if ok then
