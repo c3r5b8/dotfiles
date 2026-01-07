@@ -1,0 +1,32 @@
+Host ax3200
+    User root
+Host proxmox
+    User root
+Host sargas
+    User c3r5b8
+Host acrab
+    User c3r5b8
+Host shaula
+    User c3r5b8
+Host antares
+    User c3r5b8
+Host rose
+    User sas
+Host vm-traefik
+    User sas
+Host vm-moodle
+    HostName 10.4.0.21
+    User sas
+    ProxyJump vm-traefik
+Host vm-monitoring
+    HostName 10.4.0.23
+    User sas
+    ProxyJump vm-traefik
+Host vm-eprints
+    HostName 10.4.0.24
+    User sas
+    ProxyJump vm-traefik
+Host vm-testing
+    HostName 10.4.0.26
+    User c3r5b8
+    ProxyJump vm-traefik
