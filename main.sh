@@ -207,7 +207,6 @@ if [[ "$TARGET_HOSTNAME" == "shaula" ]]; then
         echo "reboot required"
         RPM_JSON="$(rpm-ostree status --json)"
     fi
-    dconf write /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout 330
 fi
 
 HAS_FFMPEG="$(echo "$RPM_JSON" | jq -r '
@@ -232,7 +231,6 @@ if [[ -z "$HAS_FFMPEG" ]]; then
     echo "installed full ffmpeg"
     echo "reboot required"
     exit 1
-    RPM_JSON="$(rpm-ostree status --json)"
 fi
 
 if ! flatpak remotes --columns=name | grep -qx flathub; then
@@ -298,44 +296,6 @@ if command -v fish >/dev/null 2>&1; then
     fi
 fi
 
-EXTENSIONS=(
-    "AlphabeticalAppGrid@stuarthayhurst"
-    "blur-my-shell@aunetx"
-    "gsconnect@andyholmes.github.io"
-    "panel-corners@aunetx"
-    "rounded-window-corners@fxgn"
-    "unblank@sun.wxg@gmail.com"
-    "forge@jmmaranan.com"
-)
-
-INSTALLED_EXTENSIONS="$(gnome-extensions list)"
-
-for EXT in "${EXTENSIONS[@]}"; do
-    if ! grep -qx "$EXT" <<<"$INSTALLED_EXTENSIONS"; then
-        echo "Installing GNOME extension: $EXT"
-
-        if ! gdbus call --session \
-            --dest org.gnome.Shell.Extensions \
-            --object-path /org/gnome/Shell/Extensions \
-            --method org.gnome.Shell.Extensions.InstallRemoteExtension \
-            "$EXT" \
-            >/dev/null 2>&1; then
-            echo "note: extension $EXT may require user interaction"
-        fi
-    fi
-done
-
-FIREFOX_THEME_DIR="$HOME/.mozilla/firefox-gnome-theme"
-
-if [[ ! -d "$FIREFOX_THEME_DIR" ]]; then
-    echo "Installing firefox-gnome-theme"
-
-    curl -fsSL \
-        https://raw.githubusercontent.com/rafaelmardojai/firefox-gnome-theme/master/scripts/install-by-curl.sh |
-        bash
-    mkdir -p "$FIREFOX_THEME_DIR"
-fi
-
 normalize_dir "$HOME/Downloads" "$HOME/downloads"
 normalize_dir "$HOME/Documents" "$HOME/documents"
 normalize_dir "$HOME/Pictures" "$HOME/pictures"
@@ -349,17 +309,11 @@ xdg-user-dirs-update
 
 download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
 
-dconf load / <./configs/gnome.dconf
-
 create_link "$DOTFILES/nvim" "$HOME/.config/nvim"
 create_link "$DOTFILES/config.fish" "$HOME/.config/fish/config.fish"
 create_link "$DOTFILES/fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
 create_link "$DOTFILES/starship.toml" "$HOME/.config/starship.toml"
 create_link "$DOTFILES/bat_config" "$HOME/.config/bat/config"
-create_link "$DOTFILES/gtk-3.0.css" "$HOME/.config/gtk-3.0/gtk.css"
-create_link "$DOTFILES/bookmarks" "$HOME/.config/gtk-3.0/bookmarks"
-create_link "$DOTFILES/gtk-4.0.css" "$HOME/.config/gtk-4.0/gtk.css"
-create_link "$DOTFILES/forge.css" "$HOME/.config/forge/stylesheet/forge/stylesheet.css"
 create_link "$DOTFILES/gitconfig" "$HOME/.gitconfig"
 create_link "$DOTFILES/ssh_config" "$HOME/.ssh/config"
 create_link "$DOTFILES/authorized_keys" "$HOME/.ssh/authorized_keys"
