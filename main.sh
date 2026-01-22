@@ -161,7 +161,7 @@ add_repo atim-starship-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud
 add_repo lihaohong-yazi-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lihaohong/yazi/repo/fedora-"${FEDORA_VER}"/lihaohong-yazi-fedora-"${FEDORA_VER}".repo
 add_repo peterwu-rendezvous-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/peterwu/rendezvous/repo/fedora-"${FEDORA_VER}"/peterwu-rendezvous-fedora-"${FEDORA_VER}".repo
 
-REQUIRED_PACKAGES=("gstreamer1-plugins-bad-free-extras" "gstreamer1-plugins-bad-freeworld" "gstreamer1-plugins-ugly" "gstreamer1-vaapi" "age" "android-tools" "bat" "bibata-cursor-themes" "btop" "Cider" "clang" "fastfetch" "fd-find" "fish" "fzf" "gcc" "git" "go" "gparted" "inkscape" "iperf3" "libreoffice" "make" "neovim" "nmap" "nvtop" "nodejs" "nodejs-npm" "onefetch" "p7zip" "qbittorrent" "rclone" "ripgrep" "krita" "starship" "steam" "syncthing" "tailscale" "telegram-desktop" "thunderbird" "tokei" "wireshark" "xxd" "zoxide" "yazi" "gnome-tweaks")
+REQUIRED_PACKAGES=("gstreamer1-plugins-bad-free-extras" "gstreamer1-plugins-bad-freeworld" "gstreamer1-plugins-ugly" "gstreamer1-vaapi" "age" "android-tools" "bat" "bibata-cursor-themes" "btop" "Cider" "clang" "fastfetch" "fd-find" "fish" "fzf" "gcc" "git" "go" "gparted" "inkscape" "iperf3" "libreoffice" "make" "neovim" "nmap" "nvtop" "nodejs" "nodejs-npm" "onefetch" "p7zip" "qbittorrent" "rclone" "ripgrep" "krita" "starship" "syncthing" "tailscale" "telegram-desktop" "thunderbird" "tokei" "wireshark" "xxd" "zoxide" "yazi" "gnome-tweaks")
 
 if [[ "$TARGET_HOSTNAME" == "antares" || "$TARGET_HOSTNAME" == "shaula" ]]; then
     REQUIRED_PACKAGES+=("intel-media-driver" "igt-gpu-tools")
@@ -244,6 +244,7 @@ install_flatpak org.gimp.GIMP
 install_flatpak org.jellyfin.JellyfinDesktop
 install_flatpak com.mikrotik.WinBox
 install_flatpak io.github.ungoogled_software.ungoogled_chromium
+install_flatpak com.valvesoftware.Steam
 
 if [[ ! -d "$HOME/.local/share/themes/adw-gtk3" ]]; then
     echo "installing adw-gtk3 theme"
