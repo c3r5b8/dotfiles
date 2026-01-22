@@ -14,6 +14,7 @@ bash main.sh
   - Setup DarkReader
   - Firefox settings
   - Setup Bitwarden
+  - Add css to vimium
 - Setup telegram
   - Log in
   - Install themes:
