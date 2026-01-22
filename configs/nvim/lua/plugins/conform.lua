@@ -32,6 +32,7 @@ return {
 				bash = { "beautysh" },
 				sh = { "shfmt" },
 				fish = { "fish_indent" },
+				css = { "prettier" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
