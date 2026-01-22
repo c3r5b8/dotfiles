@@ -1,5 +1,5 @@
 if status is-interactive
-    set -gx PATH $HOME/go/bin $PATH
+    set -gx PATH $HOME/go/bin $HOME/.local/bin $PATH
 
     set -gx EDITOR nvim
     set -gx VISUAL nvim
