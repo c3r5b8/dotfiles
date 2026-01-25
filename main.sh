@@ -326,16 +326,23 @@ if [[ "${#TO_INSTALL_FLATHUB[@]}" -gt 0 ]]; then
     flatpak install -y flathub "${TO_INSTALL_FLATHUB[@]}"
 fi
 
+if [[ ! -d "$HOME/.local/share/themes/catppuccin-latte-green-standard+default" || ! -d "$HOME/.local/share/themes/catppuccin-mocha-green-standard+default" ]]; then
+    echo "Installing Catppuccin GTK themes"
+
     mkdir -p "$HOME/.local/share/themes"
 
-    tar -xf adw-gtk3v*.tar.xz -C "$HOME/.local/share/themes/"
-    rm -f adw-gtk3v*.tar.xz
-    sudo flatpak override --filesystem=xdg-data/themes
-    sudo flatpak mask org.gtk.Gtk3theme.adw-gtk3
-    sudo flatpak mask org.gtk.Gtk3theme.adw-gtk3-dark
-fi
+    download_from_github "https://api.github.com/repos/catppuccin/gtk/releases/latest" "catppuccin-latte-green-.*zip"
+    unzip -o "catppuccin-latte-green-standard%2Bdefault.zip" -d "$HOME/.local/share/themes/"
+    rm -f "catppuccin-latte-green-standard%2Bdefault.zip"
 
-FONT_BASE="$HOME/.local/share/fonts"
+    download_from_github "https://api.github.com/repos/catppuccin/gtk/releases/latest" "catppuccin-mocha-green-.*zip"
+    unzip -o "catppuccin-mocha-green-standard%2Bdefault.zip" -d "$HOME/.local/share/themes/"
+    rm -f "catppuccin-mocha-green-standard%2Bdefault.zip"
+
+    sudo flatpak override --filesystem=xdg-data/themes
+
+    echo "Catppuccin themes installed"
+fi
 
 if [[ ! -d "$FONT_BASE/FiraCode" ]]; then
     echo "installing FiraCode Nerd Font"
