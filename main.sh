@@ -294,16 +294,37 @@ if ! flatpak remotes --columns=name | grep -qx flathub; then
     echo "enabled flathub"
 fi
 
-install_flatpak org.gimp.GIMP
-install_flatpak org.jellyfin.JellyfinDesktop
-install_flatpak com.mikrotik.WinBox
-install_flatpak io.github.ungoogled_software.ungoogled_chromium
-install_flatpak com.valvesoftware.Steam
+REQUIRED_FLATHUB=(
+    org.gimp.GIMP
+    org.jellyfin.JellyfinDesktop
+    com.mikrotik.WinBox
+    io.github.ungoogled_software.ungoogled_chromium
+    com.valvesoftware.Steam
+)
 
-if [[ ! -d "$HOME/.local/share/themes/adw-gtk3" ]]; then
-    echo "installing adw-gtk3 theme"
+mapfile -t REQUIRED_FLATHUB < <(printf '%s\n' "${REQUIRED_FLATHUB[@]}" | sort -u)
+mapfile -t CURRENT_FLATHUB < <(flatpak list --app --columns=application | tail -n +1 | sort -u)
+mapfile -t TO_INSTALL_FLATHUB < <(comm -23 <(printf '%s\n' "${REQUIRED_FLATHUB[@]}") <(printf '%s\n' "${CURRENT_FLATHUB[@]}"))
+mapfile -t TO_REMOVE_FLATHUB < <(comm -13 <(printf '%s\n' "${REQUIRED_FLATHUB[@]}") <(printf '%s\n' "${CURRENT_FLATHUB[@]}"))
 
-    download_from_github "https://api.github.com/repos/lassekongo83/adw-gtk3/releases/latest" "*\.tar\.xz"
+if [[ "${#TO_REMOVE_FLATHUB[@]}" -gt 0 || "${#TO_INSTALL_FLATHUB[@]}" -gt 0 ]]; then
+    matching=$(comm -12 <(printf '%s\n' "${REQUIRED_FLATHUB[@]}") <(printf '%s\n' "${CURRENT_FLATHUB[@]}") | wc -l)
+    echo "Packages already matching: $matching"
+    echo "Total required: ${#REQUIRED_FLATHUB[@]}"
+    echo "Total currently layered: ${#CURRENT_FLATHUB[@]}"
+    echo "${TO_INSTALL_FLATHUB[@]}"
+    echo "${TO_REMOVE_FLATHUB[@]}"
+fi
+
+if [[ "${#TO_REMOVE_FLATHUB[@]}" -gt 0 ]]; then
+    echo "Uninstalling extra apps: ${TO_REMOVE_FLATHUB[*]}"
+    flatpak uninstall -y "${TO_REMOVE_FLATHUB[@]}"
+fi
+
+if [[ "${#TO_INSTALL_FLATHUB[@]}" -gt 0 ]]; then
+    echo "Installing missing apps: ${TO_INSTALL_FLATHUB[*]}"
+    flatpak install -y flathub "${TO_INSTALL_FLATHUB[@]}"
+fi
 
     mkdir -p "$HOME/.local/share/themes"
 
