@@ -198,8 +198,7 @@ REQUIRED=(
     xxd
     zoxide
     yazi
-    chezmoi
-    rbw
+    stow
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
