@@ -9,26 +9,27 @@ die() {
     exit 1
 }
 
-target_hostname() {
-    local hostname="${1:-}"
+set_file() {
+    local file="$1"
+    local required="$2"
+    local perms="$3"
 
-    if [[ -n "$hostname" ]]; then
-        echo "$hostname"
-        return
-    fi
-
-    [[ -f /etc/hostname ]] || die "hostname not provided and /etc/hostname does not exist"
-    hostname="$(</etc/hostname)"
-    hostname="${hostname//$'\n'/}"
-    [[ -n "$hostname" ]] || die "/etc/hostname is empty"
-    echo "$hostname"
-}
-enable_service() {
-    if ! systemctl is-enabled --quiet "$1"; then
-        sudo systemctl enable --now "$1"
-        echo "enabled and started $1"
+    if [[ "$(sudo cat "$file" 2>/dev/null)" != "$required" ]]; then
+        echo "$required" | sudo tee "$file" >/dev/null
+        sudo chmod "$perms" "$file"
+        echo "created $file file"
     fi
 }
+
+add_repo() {
+    if [[ ! -f "/etc/yum.repos.d/$1" ]]; then
+        sudo curl -fsSL \
+            "$2" \
+            -o "/etc/yum.repos.d/$1"
+        echo "added $1 repo"
+    fi
+}
+
 install_flatpak() {
     if ! grep -qx "$1" <<<"$INSTALLED_FLATPAKS"; then
         flatpak install flathub "$1" -y
@@ -53,24 +54,10 @@ download_from_github() {
     curl -fL -O "$url"
 }
 
-add_repo() {
-    if [[ ! -f "/etc/yum.repos.d/$1" ]]; then
-        sudo curl -fsSL \
-            "$2" \
-            -o "/etc/yum.repos.d/$1"
-        echo "added $1 repo"
-    fi
-}
-
-set_file() {
-    local file="$1"
-    local required="$2"
-    local perms="$3"
-
-    if [[ "$(sudo cat "$file" 2>/dev/null)" != "$required" ]]; then
-        echo "$required" | sudo tee "$file" >/dev/null
-        sudo chmod "$perms" "$file"
-        echo "created $file file"
+enable_service() {
+    if ! systemctl is-enabled --quiet "$1"; then
+        sudo systemctl enable --now "$1"
+        echo "enabled and started $1"
     fi
 }
 
@@ -121,25 +108,29 @@ create_link() {
     fi
 }
 
-TARGET_HOSTNAME=$(target_hostname "$@")
 FEDORA_VER="$(rpm -E %fedora)"
 RPM_JSON="$(rpm-ostree status --json)"
 INSTALLED_FLATPAKS="$(flatpak list --app --columns=application)"
+FONT_BASE="$HOME/.local/share/fonts"
 DOTFILES="$HOME/dev/dotfiles/configs"
 
 set_file "/etc/sudoers.d/00_c3r5b8" "c3r5b8 ALL=(ALL:ALL) NOPASSWD: ALL" "0440"
-set_file "/etc/hostname" "$TARGET_HOSTNAME" 0644
-
-enable_service sshd
+sddm_config=$(
+    cat <<EOF
+    [Autologin]
+    User=c3r5b8
+    Session=sway
+EOF
+)
+set_file "/etc/sddm.conf.d/autologin.conf" "$sddm_config" "0644"
 
 if ! echo "$RPM_JSON" | jq -r '
     .deployments[0]["requested-local-packages"][]?,
     .deployments[0]["requested-packages"][]?
 ' | grep -q '^rpmfusion-'; then
-    sudo rpm-ostree install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"${FEDORA_VER}".noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"${FEDORA_VER}".noarch.rpm
+    sudo rpm-ostree install --apply-live -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-"${FEDORA_VER}".noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"${FEDORA_VER}".noarch.rpm
     echo "installed rpmfusion"
-    echo "reboot required"
-    exit 1
+    RPM_JSON="$(rpm-ostree status --json)"
 fi
 
 if echo "$RPM_JSON" | jq -r '.deployments[0].["requested-local-packages"][]' | grep -q rpmfusion; then
@@ -152,7 +143,7 @@ if echo "$RPM_JSON" | jq -r '.deployments[0].["requested-local-packages"][]' | g
 fi
 
 if [[ ! -f "/etc/yum.repos.d/cider.repo" ]]; then
-    sudo cp ./configs/cider.repo /etc/yum.repos.d/cider.repo
+    sudo cp ./cider.repo /etc/yum.repos.d/cider.repo
     echo "added cider repo"
 fi
 
@@ -161,39 +152,105 @@ add_repo atim-starship-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud
 add_repo lihaohong-yazi-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lihaohong/yazi/repo/fedora-"${FEDORA_VER}"/lihaohong-yazi-fedora-"${FEDORA_VER}".repo
 add_repo peterwu-rendezvous-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/peterwu/rendezvous/repo/fedora-"${FEDORA_VER}"/peterwu-rendezvous-fedora-"${FEDORA_VER}".repo
 
-REQUIRED_PACKAGES=("gstreamer1-plugins-bad-free-extras" "gstreamer1-plugins-bad-freeworld" "gstreamer1-plugins-ugly" "gstreamer1-vaapi" "age" "android-tools" "bat" "bibata-cursor-themes" "btop" "Cider" "clang" "fastfetch" "fd-find" "fish" "fzf" "gcc" "git" "go" "gparted" "inkscape" "iperf3" "libreoffice" "make" "neovim" "nmap" "nvtop" "nodejs" "nodejs-npm" "onefetch" "p7zip" "qbittorrent" "rclone" "ripgrep" "krita" "starship" "syncthing" "tailscale" "telegram-desktop" "thunderbird" "tokei" "wireshark" "xxd" "zoxide" "yazi" "gnome-tweaks")
+REQUIRED=(
+    gstreamer1-plugins-bad-free-extras
+    gstreamer1-plugins-bad-freeworld
+    gstreamer1-plugins-ugly
+    gstreamer1-vaapi
+    age
+    android-tools
+    bat
+    bibata-cursor-themes
+    btop
+    Cider
+    clang
+    fastfetch
+    fd-find
+    fish
+    fzf
+    gcc
+    git
+    go
+    gparted
+    inkscape
+    iperf3
+    libreoffice
+    make
+    neovim
+    nmap
+    nvtop
+    nodejs
+    nodejs-npm
+    onefetch
+    p7zip
+    qbittorrent
+    rclone
+    ripgrep
+    krita
+    starship
+    fuzzel
+    syncthing
+    tailscale
+    telegram-desktop
+    thunderbird
+    tokei
+    wireshark
+    xxd
+    zoxide
+    yazi
+    chezmoi
+    rbw
+)
 
-if [[ "$TARGET_HOSTNAME" == "antares" || "$TARGET_HOSTNAME" == "shaula" ]]; then
-    REQUIRED_PACKAGES+=("intel-media-driver" "igt-gpu-tools")
+REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
+
+if [[ "$HOSTNAME" == "antares" || "$HOSTNAME" == "shaula" ]]; then
+    REQUIRED+=("intel-media-driver" "igt-gpu-tools")
 fi
 
-if [[ "$TARGET_HOSTNAME" == "acrab" ]]; then
-    REQUIRED_PACKAGES+=("mesa-vdpau-drivers-freeworld")
-    if ! echo "$RPM_JSON" | jq -r '.deployments[0]["requested-base-removals"][]?' | grep -q '^mesa-va-drivers'; then
+if [[ "$HOSTNAME" == "acrab" ]]; then
+    REQUIRED+=("mesa-vdpau-drivers-freeworld")
+    if ! echo "$RPM_JSON" | jq -r '.deployments[0]."requested-base-removals"[]?' | grep -Fxq "mesa-va-drivers"; then
+        echo "Applying override: remove mesa-va-drivers, install mesa-va-drivers-freeworld"
         sudo rpm-ostree override remove mesa-va-drivers --install mesa-va-drivers-freeworld
-        RPM_JSON="$(rpm-ostree status --json)"
+        echo "Reboot required for override"
+        RPM_JSON=$(rpm-ostree status --json) # Refresh JSON after change
     fi
 fi
 
-INSTALLED_PACKAGES="$(echo "$RPM_JSON" | jq -r '
-  .deployments[0]["requested-packages"][]?,
-  .deployments[0]["packages"][]?')"
+mapfile -t CURRENT < <(echo "$RPM_JSON" | jq -r '.deployments[0].packages // [] | .[]' | sort -u)
 
-MISSING_PACKAGES=()
-for pkg in "${REQUIRED_PACKAGES[@]}"; do
-    if ! grep -qx "$pkg" <<<"$INSTALLED_PACKAGES"; then
-        MISSING_PACKAGES+=("$pkg")
-    fi
-done
+mapfile -t REQ_SORTED < <(printf '%s\n' "${REQUIRED[@]}" | sort -u)
 
-if [[ "${#MISSING_PACKAGES[@]}" -gt 0 ]]; then
-    echo "Installing missing packages: ${MISSING_PACKAGES[*]}"
-    sudo rpm-ostree install "${MISSING_PACKAGES[@]}"
+mapfile -t TO_INSTALL < <(comm -23 <(printf '%s\n' "${REQ_SORTED[@]}") <(printf '%s\n' "${CURRENT[@]}"))
+mapfile -t TO_REMOVE < <(comm -13 <(printf '%s\n' "${REQ_SORTED[@]}") <(printf '%s\n' "${CURRENT[@]}"))
+mapfile -t TO_REMOVE < <(comm -13 <(printf '%s\n' "${REMOVE_IGNORE[@]}") <(printf '%s\n' "${TO_REMOVE[@]}"))
+
+# Summary
+if [[ "${#TO_REMOVE[@]}" -gt 0 || "${#TO_INSTALL[@]}" -gt 0 ]]; then
+    matching=$(comm -12 <(printf '%s\n' "${REQ_SORTED[@]}") <(printf '%s\n' "${CURRENT[@]}") | wc -l)
+    echo "Packages already matching: $matching"
+    echo "Total required: ${#REQ_SORTED[@]}"
+    echo "Total currently layered: ${#CURRENT[@]}"
+    echo "${TO_INSTALL[@]}"
+    echo "${TO_REMOVE[@]}"
+fi
+
+if [[ "${#TO_REMOVE[@]}" -gt 0 ]]; then
+    echo "Uninstalling extra packages: ${TO_REMOVE[*]}"
+    sudo rpm-ostree uninstall "${TO_REMOVE[@]}"
     echo "reboot required"
     RPM_JSON="$(rpm-ostree status --json)"
 fi
 
-if [[ "$TARGET_HOSTNAME" == "shaula" ]]; then
+if [[ "${#TO_INSTALL[@]}" -gt 0 ]]; then
+    echo "Installing missing packages: ${TO_INSTALL[*]}"
+    sudo rpm-ostree install "${TO_INSTALL[@]}"
+    echo "reboot required"
+    RPM_JSON="$(rpm-ostree status --json)"
+fi
+
+if [[ "$HOSTNAME" == "shaula" ]]; then
     INITRAMFS_ENABLED="$(echo "$RPM_JSON" | jq -r '.deployments[0]["regenerate-initramfs"]')"
     if [[ "$INITRAMFS_ENABLED" != "true" ]]; then
         sudo rpm-ostree initramfs --enable
@@ -230,7 +287,6 @@ if [[ -z "$HAS_FFMPEG" ]]; then
 
     echo "installed full ffmpeg"
     echo "reboot required"
-    exit 1
 fi
 
 if ! flatpak remotes --columns=name | grep -qx flathub; then
