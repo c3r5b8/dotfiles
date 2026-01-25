@@ -387,5 +387,8 @@ normalize_dir "$HOME/Desktop" "$HOME/desktop"
 normalize_dir "$HOME/Templates" "$HOME/templates"
 normalize_dir "$HOME/Public" "$HOME/public"
 stow --target="$HOME" configs
+if [[ ! -f "$HOME/.cache/bat/themes.bin" ]]; then
+    bat cache -b
+fi
 xdg-user-dirs-update
 download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
