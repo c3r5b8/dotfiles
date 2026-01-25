@@ -112,7 +112,6 @@ FEDORA_VER="$(rpm -E %fedora)"
 RPM_JSON="$(rpm-ostree status --json)"
 INSTALLED_FLATPAKS="$(flatpak list --app --columns=application)"
 FONT_BASE="$HOME/.local/share/fonts"
-DOTFILES="$HOME/dev/dotfiles/configs"
 
 set_file "/etc/sudoers.d/00_c3r5b8" "c3r5b8 ALL=(ALL:ALL) NOPASSWD: ALL" "0440"
 sddm_config=$(
@@ -143,7 +142,7 @@ if echo "$RPM_JSON" | jq -r '.deployments[0].["requested-local-packages"][]' | g
 fi
 
 if [[ ! -f "/etc/yum.repos.d/cider.repo" ]]; then
-    sudo cp ./cider.repo /etc/yum.repos.d/cider.repo
+    sudo cp ./files/cider.repo /etc/yum.repos.d/cider.repo
     echo "added cider repo"
 fi
 
@@ -258,7 +257,7 @@ if [[ "$HOSTNAME" == "shaula" ]]; then
     fi
     if ! echo "$RPM_JSON" | jq -r '.deployments[0]["requested-local-packages"][]?' |
         grep -q '^intel-ish-firmware'; then
-        sudo rpm-ostree install ./intel-ish-firmware-0.1.rpm
+        sudo rpm-ostree install ./files/intel-ish-firmware-0.1.rpm
         echo "installed intel-ish-firmware"
         echo "reboot required"
         RPM_JSON="$(rpm-ostree status --json)"
@@ -387,16 +386,6 @@ normalize_dir "$HOME/Videos" "$HOME/videos"
 normalize_dir "$HOME/Desktop" "$HOME/desktop"
 normalize_dir "$HOME/Templates" "$HOME/templates"
 normalize_dir "$HOME/Public" "$HOME/public"
-create_link "$DOTFILES/user-dirs.dirs" "$HOME/.config/user-dirs.dirs"
+stow --target="$HOME" configs
 xdg-user-dirs-update
-
 download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
-
-create_link "$DOTFILES/nvim" "$HOME/.config/nvim"
-create_link "$DOTFILES/config.fish" "$HOME/.config/fish/config.fish"
-create_link "$DOTFILES/fonts.conf" "$HOME/.config/fontconfig/fonts.conf"
-create_link "$DOTFILES/starship.toml" "$HOME/.config/starship.toml"
-create_link "$DOTFILES/bat_config" "$HOME/.config/bat/config"
-create_link "$DOTFILES/gitconfig" "$HOME/.gitconfig"
-create_link "$DOTFILES/ssh_config" "$HOME/.ssh/config"
-create_link "$DOTFILES/authorized_keys" "$HOME/.ssh/authorized_keys"
