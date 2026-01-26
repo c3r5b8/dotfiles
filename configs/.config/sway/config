@@ -17,6 +17,7 @@ exec LT="$lock_timeout" ST="$screen_timeout" LT=${LT:-300} ST=${ST:-60} && \
         lock 'swaylock -f' \
         unlock 'pkill -xu "$USER" -SIGUSR1 swaylock'
 
+exec ~/.local/bin/auto_rotate_screen.sh
 exec /usr/libexec/sway-systemd/assign-cgroups.py
 exec /usr/libexec/sway-systemd/session.sh
 exec /usr/libexec/polkit-mate-authentication-agent-1

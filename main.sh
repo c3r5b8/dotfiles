@@ -198,6 +198,18 @@ REQUIRED=(
     zoxide
     yazi
     stow
+    # for wvkbd
+    cairo-devel
+    pango-devel
+    wayland-devel
+    libxkbcommon-devel
+    scdoc
+    # for screen rotation script
+    iio-sensor-proxy
+    mawk
+    # for lisgd
+    libinput-devel
+    wayland-devel
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)

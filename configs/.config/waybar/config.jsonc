@@ -1,0 +1,72 @@
+{
+    // "layer": "bottom",
+    "position": "top",
+    "height": 30,
+    "spacing": 0,
+    "modules-left": ["custom/launcher","clock","idle_inhibitor","bluetooth","network"],
+    "modules-center": ["sway/workspaces"],
+    "modules-right": ["sway/language", "pulseaudio", "battery", "backlight", "custom/close"],
+    "sway/workspaces": {
+    "persistent-workspaces": {
+        "1": ["eDP-1"],
+        "2": ["eDP-1"],
+        "3": ["eDP-1"],
+        "4": ["eDP-1"],
+        "5": ["eDP-1"],
+        "6": ["eDP-1"],
+        "7": ["eDP-1"],
+        "8": ["eDP-1"],
+        "9": ["eDP-1"],
+        "10": ["eDP-1"]
+    }
+},
+    "custom/launcher":{
+    "format":" 󰊠 ",
+        "tooltip": false,
+"on-click":"fuzzel"
+},
+    "custom/keyboard":{
+    "format":"  󰊠  ",
+        "tooltip": false,
+"on-click":"fuzzel"
+},
+    "custom/close":{
+    "format":"󰅙 ",
+        "tooltip": false,
+"on-click":"swaymsg kill"
+},
+"bluetooth": {
+	"format": "| bt: on(0)",
+	"format-disabled": "| bt: off", // an empty format will hide the module
+	"format-connected": "| bt: on({num_connections})",
+        "tooltip": false
+},
+"idle_inhibitor": {
+    "format": "{icon}",
+        "tooltip": false,
+    "format-icons": {
+        "activated": "awake",
+        "deactivated": "idle"
+    }
+},
+    "sway/language": {
+        "format": "lang: {short}",
+        "tooltip": false
+    },
+
+    "pulseaudio": {
+        "format": "vol: {volume}%"
+    },
+
+    "battery": {
+        "format": "bat: {capacity}%",
+        "format-charging": "ac: {capacity}%",
+        "tooltip": false,
+        "interval": 20
+    },
+
+    "backlight": {
+        "format": "light: {percent}%",
+        "tooltip": false
+    }
+}

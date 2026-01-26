@@ -1,0 +1,55 @@
+* {
+  all: unset;
+  min-height: 0;
+  font-size: 20px;
+}
+
+window#waybar {
+  background-color: #000000;
+}
+
+#language,
+#pulseaudio,
+#battery,
+#backlight,
+#custom-launcher,
+#custom-keyboard,
+#custom-close,
+#clock,
+#power-profiles-daemon,
+#network,
+#bluetooth,
+#idle_inhibitor,
+#workspaces {
+  padding: 0px 5px 2px 5px;
+  font-family: "AdwaitaMono Nerd Font";
+  font-weight: 900;
+  color: #ffffff;
+}
+
+#workspaces button {
+  padding: 0px 12px 0px 12px;
+  color: #ffffff;
+}
+
+#workspaces button:hover {
+  background: none;
+  border: none;
+  color: #ddffdd;
+  border-color: transparent;
+  transition: none;
+}
+
+#workspaces button.empty {
+  color: #777777;
+}
+
+#workspaces button.empty:hover {
+  color: #558855;
+}
+
+#workspaces button.focused {
+  border-radius: 0;
+  color: #77ff77;
+  font-weight: bold;
+}
