@@ -315,7 +315,7 @@ REQUIRED_FLATHUB=(
 mapfile -t REQUIRED_FLATHUB < <(printf '%s\n' "${REQUIRED_FLATHUB[@]}" | sort -u)
 mapfile -t CURRENT_FLATHUB < <(flatpak list --app --columns=application | tail -n +1 | sort -u)
 mapfile -t TO_INSTALL_FLATHUB < <(comm -23 <(printf '%s\n' "${REQUIRED_FLATHUB[@]}") <(printf '%s\n' "${CURRENT_FLATHUB[@]}"))
-mapfile -t TO_REMOVE_FLATHUB < <(comm -13 <(printf '%s\n' "${REQUIRED_FLATHUB[@]}") <(printf '%s\n' "${CURRENT_FLATHUB[@]}"))
+mapfile -t TO_REMOVE_FLATHUB < <(comm -13 <(printf '%s\n' "${REQUIRED_FLATHUB[@]}") <(printf '%s\n' "${CURRENT_FLATHUB[@]}" | grep -v '^$'))
 
 if [[ "${#TO_REMOVE_FLATHUB[@]}" -gt 0 || "${#TO_INSTALL_FLATHUB[@]}" -gt 0 ]]; then
     matching=$(comm -12 <(printf '%s\n' "${REQUIRED_FLATHUB[@]}") <(printf '%s\n' "${CURRENT_FLATHUB[@]}") | wc -l)
