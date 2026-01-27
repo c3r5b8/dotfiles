@@ -149,6 +149,7 @@ fi
 add_repo tailscale.repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
 add_repo atim-starship-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-"${FEDORA_VER}"/atim-starship-fedora-"${FEDORA_VER}".repo
 add_repo lihaohong-yazi-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lihaohong/yazi/repo/fedora-"${FEDORA_VER}"/lihaohong-yazi-fedora-"${FEDORA_VER}".repo
+add_repo lizardbyte-beta-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lizardbyte/beta/repo/fedora-"${FEDORA_VER}"/lizardbyte-beta-fedora-"${FEDORA_VER}".repo
 add_repo solopasha-hyprland-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/repo/fedora-"${FEDORA_VER}"/solopasha-hyprland-fedora-"${FEDORA_VER}".repo
 add_repo peterwu-rendezvous-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/peterwu/rendezvous/repo/fedora-"${FEDORA_VER}"/peterwu-rendezvous-fedora-"${FEDORA_VER}".repo
 
@@ -213,6 +214,7 @@ REQUIRED=(
     wayland-devel
     NetworkManager-tui
     hypridle
+    Sunshine
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
@@ -312,6 +314,7 @@ REQUIRED_FLATHUB=(
     org.jellyfin.JellyfinDesktop
     com.mikrotik.WinBox
     io.github.ungoogled_software.ungoogled_chromium
+    com.moonlight_stream.Moonlight
     com.valvesoftware.Steam
 )
 
