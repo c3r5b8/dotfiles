@@ -401,7 +401,7 @@ normalize_dir "$HOME/Videos" "$HOME/videos"
 normalize_dir "$HOME/Desktop" "$HOME/desktop"
 normalize_dir "$HOME/Templates" "$HOME/templates"
 normalize_dir "$HOME/Public" "$HOME/public"
-stow --target="$HOME" configs
+stow --no-folding --target="$HOME" configs
 if [[ ! -f "$HOME/.cache/bat/themes.bin" ]]; then
     bat cache -b
 fi
