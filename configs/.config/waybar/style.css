@@ -1,3 +1,4 @@
+@import "latte.css";
 * {
   all: unset;
   min-height: 0;
@@ -5,7 +6,7 @@
 }
 
 window#waybar {
-  background-color: #000000;
+  background-color: @base;
 }
 
 #language,
@@ -18,38 +19,92 @@ window#waybar {
 #clock,
 #power-profiles-daemon,
 #network,
+#idle_inhibitor,
+#workspaces {
+  /* padding: 0px 5px 2px 5px; */
+}
+
+#language,
+#pulseaudio,
+#battery,
+#backlight,
+#custom-launcher,
+#custom-label_bt,
+#custom-label_language,
+#custom-label_pulseaudio,
+#custom-label_backlight,
+#custom-keyboard,
+#custom-close,
+#clock,
+#power-profiles-daemon,
+#network,
 #bluetooth,
 #idle_inhibitor,
 #workspaces {
-  padding: 0px 5px 2px 5px;
   font-family: "AdwaitaMono Nerd Font";
   font-weight: 900;
-  color: #ffffff;
+  color: @text;
+}
+#custom-label_pulseaudio {
+  color: @sky;
+}
+#custom-label_bt {
+  color: @blue;
+}
+#network.net2 {
+  color: @sapphire;
+}
+#network.net2.disconnected {
+  color: @red;
+}
+#custom-label_backlight {
+  color: @yellow;
+}
+#custom-label_language {
+  color: @mauve;
+}
+#custom-launcher {
+  color: @green;
+}
+#idle_inhibitor.activated {
+  color: @red;
+}
+#battery.bat2.warning {
+  color: @peach;
+}
+#battery.bat2.critical {
+  color: @red;
+}
+#battery.bat2 {
+  color: @blue;
 }
 
+#custom-close {
+  color: @red;
+}
 #workspaces button {
   padding: 0px 12px 0px 12px;
-  color: #ffffff;
+  color: @text;
 }
 
 #workspaces button:hover {
   background: none;
   border: none;
-  color: #ddffdd;
+  color: @teal;
   border-color: transparent;
   transition: none;
 }
 
 #workspaces button.empty {
-  color: #777777;
+  color: @overlay0;
 }
 
 #workspaces button.empty:hover {
-  color: #558855;
+  color: @teal;
 }
 
 #workspaces button.focused {
   border-radius: 0;
-  color: #77ff77;
+  color: @green;
   font-weight: bold;
 }
