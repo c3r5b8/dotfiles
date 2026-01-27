@@ -37,7 +37,7 @@ exec_always {
     gsettings set org.gnome.desktop.interface cursor-size 24
 }
 
-output * bg /usr/share/backgrounds/default.jxl fill
+output * bg ~/pictures/wallpapers/element/Greens.jpg fill
 
 output eDP-1 {
     resolution 1920x1080@60Hz
