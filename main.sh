@@ -215,6 +215,7 @@ REQUIRED=(
     NetworkManager-tui
     hypridle
     Sunshine
+    steam-devices
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
