@@ -210,6 +210,7 @@ REQUIRED=(
     # for lisgd
     libinput-devel
     wayland-devel
+    NetworkManager-tui
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
