@@ -33,6 +33,8 @@ return {
 				sh = { "shfmt" },
 				fish = { "fish_indent" },
 				css = { "prettier" },
+				json = { "prettier" },
+				jsonc = { "prettier" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
