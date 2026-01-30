@@ -72,31 +72,6 @@ normalize_dir() {
     mkdir -p "$dst"
 }
 
-download_wallpaper() {
-    local wallpaper_dir="$HOME/pictures/wallpapers/$1"
-    local mf_url="$2"
-
-    if [[ ! -d "$wallpaper_dir" ]]; then
-        echo "Downloading wallpapers…"
-        mkdir -p "$wallpaper_dir"
-        local dl_link=""
-        dl_link="$(curl -fsSL "$mf_url" |
-            grep -oE 'https://download[^"]+' |
-            head -n 1)"
-
-        if [[ -z "$dl_link" ]]; then
-            die "Could not resolve MediaFire direct link"
-        fi
-        curl -fsSL -o wallpaper.zip "$dl_link"
-        unzip -o wallpaper.zip -d "$wallpaper_dir"
-        find "$wallpaper_dir" -mindepth 2 -type f -exec mv {} "$wallpaper_dir/" \;
-        find "$wallpaper_dir" -mindepth 1 -type d -empty -delete
-        rm -f wallpaper.zip
-
-        echo "Wallpapers installed in $wallpaper_dir"
-    fi
-}
-
 create_link() {
     local source="$1"
     local destination="$2"
@@ -114,14 +89,6 @@ INSTALLED_FLATPAKS="$(flatpak list --app --columns=application)"
 FONT_BASE="$HOME/.local/share/fonts"
 
 set_file "/etc/sudoers.d/00_c3r5b8" "c3r5b8 ALL=(ALL:ALL) NOPASSWD: ALL" "0440"
-sddm_config=$(
-    cat <<EOF
-    [Autologin]
-    User=c3r5b8
-    Session=sway
-EOF
-)
-set_file "/etc/sddm.conf.d/autologin.conf" "$sddm_config" "0644"
 
 if ! echo "$RPM_JSON" | jq -r '
     .deployments[0]["requested-local-packages"][]?,
@@ -149,8 +116,6 @@ fi
 add_repo tailscale.repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
 add_repo atim-starship-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-"${FEDORA_VER}"/atim-starship-fedora-"${FEDORA_VER}".repo
 add_repo lihaohong-yazi-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lihaohong/yazi/repo/fedora-"${FEDORA_VER}"/lihaohong-yazi-fedora-"${FEDORA_VER}".repo
-add_repo lizardbyte-beta-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lizardbyte/beta/repo/fedora-"${FEDORA_VER}"/lizardbyte-beta-fedora-"${FEDORA_VER}".repo
-add_repo solopasha-hyprland-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/repo/fedora-"${FEDORA_VER}"/solopasha-hyprland-fedora-"${FEDORA_VER}".repo
 add_repo peterwu-rendezvous-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/peterwu/rendezvous/repo/fedora-"${FEDORA_VER}"/peterwu-rendezvous-fedora-"${FEDORA_VER}".repo
 
 REQUIRED=(
@@ -200,6 +165,7 @@ REQUIRED=(
     zoxide
     yazi
     stow
+<<<<<<< HEAD
     # for wvkbd
     cairo-devel
     pango-devel
@@ -216,6 +182,8 @@ REQUIRED=(
     hypridle
     Sunshine
     steam-devices
+=======
+>>>>>>> 53c5182 ([script]: remove things that are not needed in kde)
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
@@ -341,24 +309,6 @@ fi
 if [[ "${#TO_INSTALL_FLATHUB[@]}" -gt 0 ]]; then
     echo "Installing missing apps: ${TO_INSTALL_FLATHUB[*]}"
     flatpak install -y flathub "${TO_INSTALL_FLATHUB[@]}"
-fi
-
-if [[ ! -d "$HOME/.local/share/themes/catppuccin-latte-green-standard+default" || ! -d "$HOME/.local/share/themes/catppuccin-mocha-green-standard+default" ]]; then
-    echo "Installing Catppuccin GTK themes"
-
-    mkdir -p "$HOME/.local/share/themes"
-
-    download_from_github "https://api.github.com/repos/catppuccin/gtk/releases/latest" "catppuccin-latte-green-.*zip"
-    unzip -o "catppuccin-latte-green-standard%2Bdefault.zip" -d "$HOME/.local/share/themes/"
-    rm -f "catppuccin-latte-green-standard%2Bdefault.zip"
-
-    download_from_github "https://api.github.com/repos/catppuccin/gtk/releases/latest" "catppuccin-mocha-green-.*zip"
-    unzip -o "catppuccin-mocha-green-standard%2Bdefault.zip" -d "$HOME/.local/share/themes/"
-    rm -f "catppuccin-mocha-green-standard%2Bdefault.zip"
-
-    sudo flatpak override --filesystem=xdg-data/themes
-
-    echo "Catppuccin themes installed"
 fi
 
 if [[ ! -d "$FONT_BASE/FiraCode" ]]; then
