@@ -1,0 +1,13 @@
+{
+  "KPlugin": {
+    "Authors": [
+      {
+        "Email": "plasma@c3r5b8.dev",
+        "Name": "c3r5b8"
+      }
+    ],
+    "Id": "Greens",
+    "License": "CC-BY-SA-4.0",
+    "Name": "Greens"
+  }
+}

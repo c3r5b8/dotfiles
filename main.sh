@@ -117,6 +117,7 @@ add_repo tailscale.repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
 add_repo atim-starship-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-"${FEDORA_VER}"/atim-starship-fedora-"${FEDORA_VER}".repo
 add_repo lihaohong-yazi-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lihaohong/yazi/repo/fedora-"${FEDORA_VER}"/lihaohong-yazi-fedora-"${FEDORA_VER}".repo
 add_repo peterwu-rendezvous-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/peterwu/rendezvous/repo/fedora-"${FEDORA_VER}"/peterwu-rendezvous-fedora-"${FEDORA_VER}".repo
+add_repo birkch-Koi-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/birkch/Koi/repo/fedora-"${FEDORA_VER}"/birkch-Koi-fedora-"${FEDORA_VER}".repo
 
 REQUIRED=(
     gstreamer1-plugins-bad-free-extras
@@ -152,6 +153,7 @@ REQUIRED=(
     qbittorrent
     rclone
     ripgrep
+    kate
     krita
     starship
     fuzzel
@@ -165,25 +167,9 @@ REQUIRED=(
     zoxide
     yazi
     stow
-<<<<<<< HEAD
-    # for wvkbd
-    cairo-devel
-    pango-devel
-    wayland-devel
-    libxkbcommon-devel
-    scdoc
-    # for screen rotation script
-    iio-sensor-proxy
-    mawk
-    # for lisgd
-    libinput-devel
-    wayland-devel
-    NetworkManager-tui
-    hypridle
-    Sunshine
     steam-devices
-=======
->>>>>>> 53c5182 ([script]: remove things that are not needed in kde)
+    Koi
+    pipx
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
@@ -271,6 +257,7 @@ if [[ -z "$HAS_FFMPEG" ]]; then
 
     echo "installed full ffmpeg"
     echo "reboot required"
+    exit 1
 fi
 
 if ! flatpak remotes --columns=name | grep -qx flathub; then
@@ -285,6 +272,16 @@ REQUIRED_FLATHUB=(
     io.github.ungoogled_software.ungoogled_chromium
     com.moonlight_stream.Moonlight
     com.valvesoftware.Steam
+    # preinstalled in fedora kinoite
+    org.kde.elisa
+    org.kde.gwenview
+    org.kde.kcalc
+    org.kde.kmahjongg
+    org.kde.kmines
+    org.kde.kolourpaint
+    org.kde.krdc
+    org.kde.okular
+    org.kde.skanpage
 )
 
 mapfile -t REQUIRED_FLATHUB < <(printf '%s\n' "${REQUIRED_FLATHUB[@]}" | sort -u)
@@ -345,17 +342,36 @@ if command -v fish >/dev/null 2>&1; then
     fi
 fi
 
-normalize_dir "$HOME/Downloads" "$HOME/downloads"
-normalize_dir "$HOME/Documents" "$HOME/documents"
-normalize_dir "$HOME/Pictures" "$HOME/pictures"
-normalize_dir "$HOME/Music" "$HOME/music"
-normalize_dir "$HOME/Videos" "$HOME/videos"
-normalize_dir "$HOME/Desktop" "$HOME/desktop"
-normalize_dir "$HOME/Templates" "$HOME/templates"
-normalize_dir "$HOME/Public" "$HOME/public"
-stow --no-folding --target="$HOME" configs
-if [[ ! -f "$HOME/.cache/bat/themes.bin" ]]; then
-    bat cache -b
+if [[ ! -d $HOME/.local/share/plasma/plasmoids/org.kde.plasma.pager ]]; then
+    git clone https://gitlab.com/carmanaught/plasma-pager.git
+    mkdir -p "$HOME/.local/share/plasma/plasmoids/"
+    cp -r plasma-pager/org.kde.plasma.pager/ "$HOME/.local/share/plasma/plasmoids/"
+    rm -rf plasma-pager
+    echo "installed custom pager"
 fi
-xdg-user-dirs-update
-download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
+
+if [[ ! -d $HOME/.local/share/icons/Papirus/ ]]; then
+    wget -qO- https://git.io/papirus-icon-theme-install | env DESTDIR="$HOME/.local/share/icons" sh
+fi
+
+if [[ ! -f $HOME/.local/bin/papirus-folders ]]; then
+    wget -qO- https://git.io/papirus-folders-install | env PREFIX="$HOME/.local" sh
+    $HOME/.local/bin/papirus-folders -C green -t Papirus-Dark
+    $HOME/.local/bin/papirus-folders -C green -t Papirus
+fi
+if command -v stow >/dev/null 2>&1; then
+    normalize_dir "$HOME/Downloads" "$HOME/downloads"
+    normalize_dir "$HOME/Documents" "$HOME/documents"
+    normalize_dir "$HOME/Pictures" "$HOME/pictures"
+    normalize_dir "$HOME/Music" "$HOME/music"
+    normalize_dir "$HOME/Videos" "$HOME/videos"
+    normalize_dir "$HOME/Desktop" "$HOME/desktop"
+    normalize_dir "$HOME/Templates" "$HOME/templates"
+    normalize_dir "$HOME/Public" "$HOME/public"
+    stow --no-folding --target="$HOME" configs
+    xdg-user-dirs-update
+    # download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
+else
+    echo "reboot required"
+    exit 1
+fi
