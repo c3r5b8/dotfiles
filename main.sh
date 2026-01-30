@@ -320,13 +320,11 @@ if [[ ! -d "$FONT_BASE/FiraCode" ]]; then
     rm -f FiraCode.zip
 fi
 
-if [[ ! -d "$FONT_BASE/AdwaitaMono" ]]; then
-    echo "installing AdwaitaMono Nerd Font"
-    download_from_github "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" "*AdwaitaMono\.zip"
-
-    mkdir -p "$FONT_BASE/AdwaitaMono"
-    unzip -o AdwaitaMono.zip -d "$FONT_BASE/AdwaitaMono"
-    rm -f AdwaitaMono.zip
+if [[ ! -d "$FONT_BASE/Fira" ]]; then
+    git clone https://github.com/mozilla/Fira.git
+    mkdir -p "$FONT_BASE/Fira"
+    cp Fira/ttf/* "$FONT_BASE/Fira"
+    rm -rf Fira
 fi
 
 if command -v tailscale >/dev/null 2>&1; then
