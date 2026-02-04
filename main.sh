@@ -90,6 +90,8 @@ FONT_BASE="$HOME/.local/share/fonts"
 
 set_file "/etc/sudoers.d/00_c3r5b8" "c3r5b8 ALL=(ALL:ALL) NOPASSWD: ALL" "0440"
 
+enable_service sshd
+
 if ! echo "$RPM_JSON" | jq -r '
     .deployments[0]["requested-local-packages"][]?,
     .deployments[0]["requested-packages"][]?
