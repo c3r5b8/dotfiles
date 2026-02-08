@@ -123,6 +123,8 @@ EOF
 )
 set_file "/etc/sddm.conf.d/autologin.conf" "$sddm_config" "0644"
 
+enable_service sshd
+
 if ! echo "$RPM_JSON" | jq -r '
     .deployments[0]["requested-local-packages"][]?,
     .deployments[0]["requested-packages"][]?
