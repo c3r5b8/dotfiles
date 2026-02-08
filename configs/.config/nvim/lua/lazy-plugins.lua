@@ -2,7 +2,6 @@ package.loaded["lspconfig"] = nil
 package.loaded["lspconfig.configs"] = nil
 require("lazy").setup({
 	require("plugins/autopairs"),
-	require("plugins/autosave"),
 	require("plugins/cmp"),
 	require("plugins/colorizer"),
 	require("plugins/conform"),
