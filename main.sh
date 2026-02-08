@@ -72,6 +72,31 @@ normalize_dir() {
     mkdir -p "$dst"
 }
 
+download_wallpaper() {
+    local wallpaper_dir="$HOME/pictures/wallpapers/$1"
+    local mf_url="$2"
+
+    if [[ ! -d "$wallpaper_dir" ]]; then
+        echo "Downloading wallpapers…"
+        mkdir -p "$wallpaper_dir"
+        local dl_link=""
+        dl_link="$(curl -fsSL "$mf_url" |
+            grep -oE 'https://download[^"]+' |
+            head -n 1)"
+
+        if [[ -z "$dl_link" ]]; then
+            die "Could not resolve MediaFire direct link"
+        fi
+        curl -fsSL -o wallpaper.zip "$dl_link"
+        unzip -o wallpaper.zip -d "$wallpaper_dir"
+        find "$wallpaper_dir" -mindepth 2 -type f -exec mv {} "$wallpaper_dir/" \;
+        find "$wallpaper_dir" -mindepth 1 -type d -empty -delete
+        rm -f wallpaper.zip
+
+        echo "Wallpapers installed in $wallpaper_dir"
+    fi
+}
+
 create_link() {
     local source="$1"
     local destination="$2"
@@ -89,8 +114,14 @@ INSTALLED_FLATPAKS="$(flatpak list --app --columns=application)"
 FONT_BASE="$HOME/.local/share/fonts"
 
 set_file "/etc/sudoers.d/00_c3r5b8" "c3r5b8 ALL=(ALL:ALL) NOPASSWD: ALL" "0440"
-
-enable_service sshd
+sddm_config=$(
+    cat <<EOF
+    [Autologin]
+    User=c3r5b8
+    Session=sway
+EOF
+)
+set_file "/etc/sddm.conf.d/autologin.conf" "$sddm_config" "0644"
 
 if ! echo "$RPM_JSON" | jq -r '
     .deployments[0]["requested-local-packages"][]?,
@@ -118,8 +149,9 @@ fi
 add_repo tailscale.repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
 add_repo atim-starship-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/atim/starship/repo/fedora-"${FEDORA_VER}"/atim-starship-fedora-"${FEDORA_VER}".repo
 add_repo lihaohong-yazi-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lihaohong/yazi/repo/fedora-"${FEDORA_VER}"/lihaohong-yazi-fedora-"${FEDORA_VER}".repo
+add_repo lizardbyte-beta-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lizardbyte/beta/repo/fedora-"${FEDORA_VER}"/lizardbyte-beta-fedora-"${FEDORA_VER}".repo
+add_repo solopasha-hyprland-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/repo/fedora-"${FEDORA_VER}"/solopasha-hyprland-fedora-"${FEDORA_VER}".repo
 add_repo peterwu-rendezvous-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/peterwu/rendezvous/repo/fedora-"${FEDORA_VER}"/peterwu-rendezvous-fedora-"${FEDORA_VER}".repo
-add_repo birkch-Koi-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/birkch/Koi/repo/fedora-"${FEDORA_VER}"/birkch-Koi-fedora-"${FEDORA_VER}".repo
 
 REQUIRED=(
     gstreamer1-plugins-bad-free-extras
@@ -155,7 +187,6 @@ REQUIRED=(
     qbittorrent
     rclone
     ripgrep
-    kate
     krita
     starship
     fuzzel
@@ -169,9 +200,22 @@ REQUIRED=(
     zoxide
     yazi
     stow
+    # for wvkbd
+    cairo-devel
+    pango-devel
+    wayland-devel
+    libxkbcommon-devel
+    scdoc
+    # for screen rotation script
+    iio-sensor-proxy
+    mawk
+    # for lisgd
+    libinput-devel
+    wayland-devel
+    NetworkManager-tui
+    hypridle
+    Sunshine
     steam-devices
-    Koi
-    pipx
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
@@ -259,7 +303,6 @@ if [[ -z "$HAS_FFMPEG" ]]; then
 
     echo "installed full ffmpeg"
     echo "reboot required"
-    exit 1
 fi
 
 if ! flatpak remotes --columns=name | grep -qx flathub; then
@@ -274,16 +317,6 @@ REQUIRED_FLATHUB=(
     io.github.ungoogled_software.ungoogled_chromium
     com.moonlight_stream.Moonlight
     com.valvesoftware.Steam
-    # preinstalled in fedora kinoite
-    org.kde.elisa
-    org.kde.gwenview
-    org.kde.kcalc
-    org.kde.kmahjongg
-    org.kde.kmines
-    org.kde.kolourpaint
-    org.kde.krdc
-    org.kde.okular
-    org.kde.skanpage
 )
 
 mapfile -t REQUIRED_FLATHUB < <(printf '%s\n' "${REQUIRED_FLATHUB[@]}" | sort -u)
@@ -310,6 +343,24 @@ if [[ "${#TO_INSTALL_FLATHUB[@]}" -gt 0 ]]; then
     flatpak install -y flathub "${TO_INSTALL_FLATHUB[@]}"
 fi
 
+if [[ ! -d "$HOME/.local/share/themes/catppuccin-latte-green-standard+default" || ! -d "$HOME/.local/share/themes/catppuccin-mocha-green-standard+default" ]]; then
+    echo "Installing Catppuccin GTK themes"
+
+    mkdir -p "$HOME/.local/share/themes"
+
+    download_from_github "https://api.github.com/repos/catppuccin/gtk/releases/latest" "catppuccin-latte-green-.*zip"
+    unzip -o "catppuccin-latte-green-standard%2Bdefault.zip" -d "$HOME/.local/share/themes/"
+    rm -f "catppuccin-latte-green-standard%2Bdefault.zip"
+
+    download_from_github "https://api.github.com/repos/catppuccin/gtk/releases/latest" "catppuccin-mocha-green-.*zip"
+    unzip -o "catppuccin-mocha-green-standard%2Bdefault.zip" -d "$HOME/.local/share/themes/"
+    rm -f "catppuccin-mocha-green-standard%2Bdefault.zip"
+
+    sudo flatpak override --filesystem=xdg-data/themes
+
+    echo "Catppuccin themes installed"
+fi
+
 if [[ ! -d "$FONT_BASE/FiraCode" ]]; then
     echo "installing FiraCode Nerd Font"
     download_from_github "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" "*FiraCode\.zip"
@@ -319,11 +370,13 @@ if [[ ! -d "$FONT_BASE/FiraCode" ]]; then
     rm -f FiraCode.zip
 fi
 
-if [[ ! -d "$FONT_BASE/Fira" ]]; then
-    git clone https://github.com/mozilla/Fira.git
-    mkdir -p "$FONT_BASE/Fira"
-    cp Fira/ttf/* "$FONT_BASE/Fira"
-    rm -rf Fira
+if [[ ! -d "$FONT_BASE/AdwaitaMono" ]]; then
+    echo "installing AdwaitaMono Nerd Font"
+    download_from_github "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest" "*AdwaitaMono\.zip"
+
+    mkdir -p "$FONT_BASE/AdwaitaMono"
+    unzip -o AdwaitaMono.zip -d "$FONT_BASE/AdwaitaMono"
+    rm -f AdwaitaMono.zip
 fi
 
 if command -v tailscale >/dev/null 2>&1; then
@@ -344,36 +397,17 @@ if command -v fish >/dev/null 2>&1; then
     fi
 fi
 
-if [[ ! -d $HOME/.local/share/plasma/plasmoids/org.kde.plasma.pager ]]; then
-    git clone https://gitlab.com/carmanaught/plasma-pager.git
-    mkdir -p "$HOME/.local/share/plasma/plasmoids/"
-    cp -r plasma-pager/org.kde.plasma.pager/ "$HOME/.local/share/plasma/plasmoids/"
-    rm -rf plasma-pager
-    echo "installed custom pager"
+normalize_dir "$HOME/Downloads" "$HOME/downloads"
+normalize_dir "$HOME/Documents" "$HOME/documents"
+normalize_dir "$HOME/Pictures" "$HOME/pictures"
+normalize_dir "$HOME/Music" "$HOME/music"
+normalize_dir "$HOME/Videos" "$HOME/videos"
+normalize_dir "$HOME/Desktop" "$HOME/desktop"
+normalize_dir "$HOME/Templates" "$HOME/templates"
+normalize_dir "$HOME/Public" "$HOME/public"
+stow --no-folding --target="$HOME" configs
+if [[ ! -f "$HOME/.cache/bat/themes.bin" ]]; then
+    bat cache -b
 fi
-
-if [[ ! -d $HOME/.local/share/icons/Papirus/ ]]; then
-    wget -qO- https://git.io/papirus-icon-theme-install | env DESTDIR="$HOME/.local/share/icons" sh
-fi
-
-if [[ ! -f $HOME/.local/bin/papirus-folders ]]; then
-    wget -qO- https://git.io/papirus-folders-install | env PREFIX="$HOME/.local" sh
-    $HOME/.local/bin/papirus-folders -C green -t Papirus-Dark
-    $HOME/.local/bin/papirus-folders -C green -t Papirus
-fi
-if command -v stow >/dev/null 2>&1; then
-    normalize_dir "$HOME/Downloads" "$HOME/downloads"
-    normalize_dir "$HOME/Documents" "$HOME/documents"
-    normalize_dir "$HOME/Pictures" "$HOME/pictures"
-    normalize_dir "$HOME/Music" "$HOME/music"
-    normalize_dir "$HOME/Videos" "$HOME/videos"
-    normalize_dir "$HOME/Desktop" "$HOME/desktop"
-    normalize_dir "$HOME/Templates" "$HOME/templates"
-    normalize_dir "$HOME/Public" "$HOME/public"
-    stow --no-folding --target="$HOME" configs
-    xdg-user-dirs-update
-    # download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
-else
-    echo "reboot required"
-    exit 1
-fi
+xdg-user-dirs-update
+download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
