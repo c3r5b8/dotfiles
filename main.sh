@@ -123,6 +123,16 @@ EOF
 )
 set_file "/etc/sddm.conf.d/autologin.conf" "$sddm_config" "0644"
 
+nm_config=$(
+    cat <<EOF
+    [connection-mac-randomization]
+    wifi.cloned-mac-address=permanent
+    ethernet.cloned-mac-address=permanent
+EOF
+)
+
+set_file "/etc/NetworkManager/conf.d/99_rand_mac.conf" "$nm_config" "0644"
+
 enable_service sshd
 
 if ! echo "$RPM_JSON" | jq -r '
