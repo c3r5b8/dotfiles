@@ -395,6 +395,21 @@ if command -v fish >/dev/null 2>&1; then
     fi
 fi
 
+if [[ ! -d $HOME/.local/share/icons/Papirus/ ]]; then
+    wget -qO- https://git.io/papirus-icon-theme-install | env DESTDIR="$HOME/.local/share/icons" sh
+fi
+
+if [[ ! -f $HOME/.local/bin/papirus-folders ]]; then
+    wget -qO- https://git.io/papirus-folders-install | env PREFIX="$HOME/.local" sh
+    git clone https://github.com/c3r5b8/papirus-folders.git
+    cd papirus-folders
+    cp -r src/* "$HOME/.local/share/icons/Papirus/"
+    cd ..
+    rm -rf papirus-folders
+    $HOME/.local/bin/papirus-folders -C cat-mocha-green -t Papirus-Dark
+    $HOME/.local/bin/papirus-folders -C cat-latte-green -t Papirus
+fi
+
 normalize_dir "$HOME/Downloads" "$HOME/downloads"
 normalize_dir "$HOME/Documents" "$HOME/documents"
 normalize_dir "$HOME/Pictures" "$HOME/pictures"
