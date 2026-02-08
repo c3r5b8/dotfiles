@@ -41,7 +41,7 @@ window#waybar {
 #bluetooth,
 #idle_inhibitor,
 #workspaces {
-  font-family: "AdwaitaMono Nerd Font";
+  font-family: "FiraCode Nerd Font";
   font-weight: 900;
   color: @text;
 }
