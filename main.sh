@@ -424,17 +424,23 @@ if [[ ! -f $HOME/.local/bin/papirus-folders ]]; then
     $HOME/.local/bin/papirus-folders -C cat-latte-green -t Papirus
 fi
 
-normalize_dir "$HOME/Downloads" "$HOME/downloads"
-normalize_dir "$HOME/Documents" "$HOME/documents"
-normalize_dir "$HOME/Pictures" "$HOME/pictures"
-normalize_dir "$HOME/Music" "$HOME/music"
-normalize_dir "$HOME/Videos" "$HOME/videos"
-normalize_dir "$HOME/Desktop" "$HOME/desktop"
-normalize_dir "$HOME/Templates" "$HOME/templates"
-normalize_dir "$HOME/Public" "$HOME/public"
-stow --no-folding --target="$HOME" configs
-if [[ ! -f "$HOME/.cache/bat/themes.bin" ]]; then
-    bat cache -b
+if command -v stow >/dev/null 2>&1; then
+    normalize_dir "$HOME/Downloads" "$HOME/downloads"
+    normalize_dir "$HOME/Documents" "$HOME/documents"
+    normalize_dir "$HOME/Pictures" "$HOME/pictures"
+    normalize_dir "$HOME/Music" "$HOME/music"
+    normalize_dir "$HOME/Videos" "$HOME/videos"
+    normalize_dir "$HOME/Desktop" "$HOME/desktop"
+    normalize_dir "$HOME/Templates" "$HOME/templates"
+    normalize_dir "$HOME/Public" "$HOME/public"
+    stow --no-folding --target="$HOME" configs
+    xdg-user-dirs-update
+    if [[ ! -f "$HOME/.cache/bat/themes.bin" ]]; then
+        bat cache -b
+    fi
+    download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
+
+else
+    echo "reboot required"
+    exit 1
 fi
-xdg-user-dirs-update
-download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
