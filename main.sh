@@ -440,6 +440,15 @@ if command -v stow >/dev/null 2>&1; then
     fi
     download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
 
+    if ! [[ -f $HOME/.local/bin/wvkbd ]]; then
+        git clone https://github.com/jjsullivan5196/wvkbd.git
+        cd wvkbd
+        git apply ../files/wvkbd.patch
+        make LAYOUT=deskintl
+        cp wvkbd-deskintl ~/.local/bin/wvkbd
+        cd ..
+        rm -rf wvkbd
+    fi
 else
     echo "reboot required"
     exit 1

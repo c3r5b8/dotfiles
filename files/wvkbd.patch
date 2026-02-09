@@ -1,0 +1,39 @@
+diff --git a/layout.deskintl.h b/layout.deskintl.h
+index b8d547e..3c2253b 100644
+--- a/layout.deskintl.h
++++ b/layout.deskintl.h
+@@ -292,7 +292,7 @@ static struct key keys_cyrillic[] = {
+   {"Del", "Del", 1.25, Code, KEY_DELETE, .scheme = 1},
+   {"", "", 0.0, EndRow},
+ 
+-  {"ё", "Ё", 1.0, Code, KEY_GRAVE},
++  {"'", "ʼ", 1.0, Code, KEY_GRAVE},
+   {"1", "!", 1.0, Code, KEY_1},
+   {"2", "\"", 1.0, Code, KEY_2},
+   {"3", "#", 1.0, Code, KEY_3},
+@@ -320,14 +320,14 @@ static struct key keys_cyrillic[] = {
+   {"щ", "щ", 1.0, Code, KEY_O},
+   {"з", "з", 1.0, Code, KEY_P},
+   {"х", "Х", 1.0, Code, KEY_LEFTBRACE},
+-  {"ъ", "Ъ", 1.0, Code, KEY_RIGHTBRACE},
++  {"ї", "Ї", 1.0, Copy, 0x0457, 0, 0x0407},
+   {"\\", "|", 1.0, Code, KEY_BACKSLASH},
+   {"", "", 0.0, EndRow},
+ 
+   {"Cmp", "Cmp", 1.0, Compose, .scheme = 1},
+   {"Caps", "Caps", 1.0, Mod, CapsLock, .scheme = 1},
+   {"ф", "Ф", 1.0, Code, KEY_A},
+-  {"ы", "Ы", 1.0, Code, KEY_S, &layouts[ComposeCyrI]},
++  {"і", "І", 1.0, Copy, 0x0456, 0, 0x0406},
+   {"в", "В", 1.0, Code, KEY_D},
+   {"а", "А", 1.0, Code, KEY_F},
+   {"п", "П", 1.0, Code, KEY_G},
+@@ -336,7 +336,7 @@ static struct key keys_cyrillic[] = {
+   {"л", "Л", 1.0, Code, KEY_K, &layouts[ComposeCyrL]},
+   {"д", "Д", 1.0, Code, KEY_L},
+   {"ж", "Ж", 1.0, Code, KEY_SEMICOLON},
+-  {"э","Э", 1.0, Code, KEY_APOSTROPHE, &layouts[ComposeCyrE]},
++  {"є", "Є", 1.0, Copy, 0x0454, 0, 0x0404},
+   {"Enter", "Enter", 1.5, Code, KEY_ENTER, .scheme = 1},
+   {"", "", 0.0, EndRow},
+ 
