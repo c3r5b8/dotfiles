@@ -354,7 +354,9 @@ if [[ "${#TO_INSTALL_FLATHUB[@]}" -gt 0 ]]; then
     echo "Installing missing apps: ${TO_INSTALL_FLATHUB[*]}"
     flatpak install -y flathub "${TO_INSTALL_FLATHUB[@]}"
 fi
-
+if ! flatpak override --user --show com.mikrotik.WinBox | grep -q "QT_QPA_PLATFORM=xcb"; then
+    flatpak override --user --env="QT_QPA_PLATFORM=xcb" "com.mikrotik.WinBox"
+fi
 if [[ ! -d "$HOME/.local/share/themes/catppuccin-latte-green-standard+default" || ! -d "$HOME/.local/share/themes/catppuccin-mocha-green-standard+default" ]]; then
     echo "Installing Catppuccin GTK themes"
 
