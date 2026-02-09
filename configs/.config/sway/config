@@ -8,6 +8,7 @@ set $menu fuzzel
 
 exec hypridle
 exec ~/.local/bin/auto_rotate_screen.sh
+# exec ~/.local/bin/wvkbd --landscape-layers full,cyrillic -l full,cyrillic --hidden
 exec /usr/libexec/sway-systemd/assign-cgroups.py
 exec /usr/libexec/sway-systemd/session.sh
 exec /usr/libexec/polkit-mate-authentication-agent-1

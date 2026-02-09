@@ -4,6 +4,7 @@
   "spacing": 0,
   "modules-left": [
     "custom/launcher",
+    "custom/keyboard",
     "clock",
     "idle_inhibitor",
     "custom/label_bt",
@@ -43,9 +44,9 @@
     "on-click": "fuzzel",
   },
   "custom/keyboard": {
-    "format": "  󰊠  ",
+    "format": "  󰌌  ",
     "tooltip": false,
-    "on-click": "fuzzel",
+"on-click": "bash ~/.local/bin/toggle_wvkbd.sh",
   },
   "custom/close": {
     "format": " 󰅙 ",

@@ -14,21 +14,6 @@ window#waybar {
 #battery,
 #backlight,
 #custom-launcher,
-#custom-keyboard,
-#custom-close,
-#clock,
-#power-profiles-daemon,
-#network,
-#idle_inhibitor,
-#workspaces {
-  /* padding: 0px 5px 2px 5px; */
-}
-
-#language,
-#pulseaudio,
-#battery,
-#backlight,
-#custom-launcher,
 #custom-label_bt,
 #custom-label_language,
 #custom-label_pulseaudio,
@@ -65,6 +50,9 @@ window#waybar {
 }
 #custom-launcher {
   color: @green;
+}
+#custom-keyboard {
+  color: @blue;
 }
 #idle_inhibitor.activated {
   color: @red;
