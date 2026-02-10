@@ -3,11 +3,13 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term foot
+set $term footclient
 set $menu fuzzel
 
 exec hypridle
 exec gtklock -d
+exec foot --server
+exec ~/.local/bin/apply_theme.sh
 exec ~/.local/bin/auto_rotate_screen.sh
 # exec ~/.local/bin/wvkbd --landscape-layers full,cyrillic -l full,cyrillic --hidden
 exec /usr/libexec/sway-systemd/assign-cgroups.py
@@ -19,17 +21,6 @@ exec /usr/libexec/sway-systemd/wait-sni-ready && \
 # exec swaymsg create_output
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME
 exec ~/.local/bin/autotiling
-
-exec_always {
-    gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-latte-green-standard+default'
-    gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
-    gsettings set org.gnome.desktop.interface font-name 'Fira Sans 12'
-    gsettings set org.gnome.desktop.interface color-scheme 'default' 
-    gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Original-Ice'
-    gsettings set org.gnome.desktop.interface cursor-size 24
-}
-
-output * bg ~/pictures/wallpapers/element/Greens.jpg fill
 
 output eDP-1 {
     resolution 1920x1080@60Hz
@@ -66,7 +57,7 @@ bindsym {
     $mod+d exec $menu
     $mod+Shift+c reload
     $mod+Shift+e exec swaymsg exit
-    $mod+Escape exec swaylock -f
+    $mod+Escape exec gtklock -d
     $mod+f fullscreen
     $mod+Shift+space floating toggle
 }
@@ -160,12 +151,7 @@ bindgesture swipe:3:right workspace prev
 bindgesture swipe:3:up workspace next
 bindgesture swipe:3:down workspace prev
 
-client.focused          #40a02b #eff1f5 #4c4f69 #40a02b #40a02b
-client.focused_inactive #9ca0b0 #eff1f5 #4c4f69 #9ca0b0 #9ca0b0
-client.unfocused        #9ca0b0 #eff1f5 #4c4f69 #9ca0b0 #9ca0b0
-client.urgent           #fe640b #eff1f5 #fe640b #9ca0b0 #fe640b
-client.placeholder      #9ca0b0 #eff1f5 #4c4f69 #9ca0b0 #9ca0b0
-client.background       #eff1f5
+include theme
 
 smart_borders on
 default_border pixel 4

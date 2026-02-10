@@ -28,4 +28,8 @@ return {
 			vim.cmd.colorscheme("catppuccin-latte")
 		end,
 	},
+	{
+		"f-person/auto-dark-mode.nvim",
+		opts = {},
+	},
 }
