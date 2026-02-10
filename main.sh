@@ -164,6 +164,7 @@ add_repo lihaohong-yazi-fedora-"${FEDORA_VER}".repo https://copr.fedorainfraclou
 add_repo lizardbyte-beta-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/lizardbyte/beta/repo/fedora-"${FEDORA_VER}"/lizardbyte-beta-fedora-"${FEDORA_VER}".repo
 add_repo solopasha-hyprland-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/solopasha/hyprland/repo/fedora-"${FEDORA_VER}"/solopasha-hyprland-fedora-"${FEDORA_VER}".repo
 add_repo peterwu-rendezvous-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/peterwu/rendezvous/repo/fedora-"${FEDORA_VER}"/peterwu-rendezvous-fedora-"${FEDORA_VER}".repo
+add_repo washkinazy-wayland-wm-extras-fedora-"${FEDORA_VER}".repo https://copr.fedorainfracloud.org/coprs/washkinazy/wayland-wm-extras/repo/fedora-"${FEDORA_VER}"/washkinazy-wayland-wm-extras-"${FEDORA_VER}".repo
 
 REQUIRED=(
     gstreamer1-plugins-bad-free-extras
@@ -228,6 +229,8 @@ REQUIRED=(
     hypridle
     Sunshine
     steam-devices
+    gtklock
+    gtk3-devel
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
@@ -448,6 +451,15 @@ if command -v stow >/dev/null 2>&1; then
         cp wvkbd-deskintl ~/.local/bin/wvkbd
         cd ..
         rm -rf wvkbd
+    fi
+    if ! [[ -f $HOME/.config/gtklock/virtkb-module.so ]]; then
+        git clone https://github.com/progandy/gtklock-virtkb-module.git
+        cd gtklock-virtkb-module
+        make
+        mkdir -p "$HOME/.config/gtklock"
+        cp virtkb-module.so "$HOME/.config/gtklock"
+        cd ..
+        rm -rf gtklock-virtkb-module
     fi
 else
     echo "reboot required"

@@ -7,6 +7,7 @@ set $term foot
 set $menu fuzzel
 
 exec hypridle
+exec gtklock -d
 exec ~/.local/bin/auto_rotate_screen.sh
 # exec ~/.local/bin/wvkbd --landscape-layers full,cyrillic -l full,cyrillic --hidden
 exec /usr/libexec/sway-systemd/assign-cgroups.py
@@ -18,7 +19,6 @@ exec /usr/libexec/sway-systemd/wait-sni-ready && \
 # exec swaymsg create_output
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME
 exec ~/.local/bin/autotiling
-exec swaylock -f
 
 exec_always {
     gsettings set org.gnome.desktop.interface gtk-theme 'catppuccin-latte-green-standard+default'
