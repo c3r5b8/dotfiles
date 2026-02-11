@@ -449,7 +449,10 @@ if command -v stow >/dev/null 2>&1; then
     normalize_dir "$HOME/Desktop" "$HOME/desktop"
     normalize_dir "$HOME/Templates" "$HOME/templates"
     normalize_dir "$HOME/Public" "$HOME/public"
-    stow --no-folding --target="$HOME" configs
+    cd configs
+    stow --no-folding --target="$HOME" common
+    stow --no-folding --target="$HOME" "$HOSTNAME"
+    cd ..
     xdg-user-dirs-update
     if [[ ! -f "$HOME/.cache/bat/themes.bin" ]]; then
         bat cache -b

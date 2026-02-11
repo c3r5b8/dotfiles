@@ -1,0 +1,9 @@
+exec ~/.local/bin/auto_rotate_screen.sh
+
+output eDP-1 {
+    resolution 1920x1080@60Hz
+    pos 0 0
+    # scale 1.25
+}
+
+
