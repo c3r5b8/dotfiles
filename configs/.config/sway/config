@@ -57,6 +57,7 @@ bindsym {
     $mod+d exec $menu
     $mod+Shift+c reload
     $mod+Shift+e exec swaymsg exit
+    $mod+Shift+t exec ~/.local/bin/switch_theme.sh toggle
     $mod+Escape exec gtklock -d
     $mod+f fullscreen
     $mod+Shift+space floating toggle
