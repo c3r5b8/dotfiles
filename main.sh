@@ -231,6 +231,7 @@ REQUIRED=(
     steam-devices
     gtklock
     gtk3-devel
+    chayang
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
