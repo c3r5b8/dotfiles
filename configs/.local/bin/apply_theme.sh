@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 THEME_FILE="$HOME/.current_theme"
-
+sleep 2
 if [ -f "$THEME_FILE" ]; then
 	theme=$(cat "$THEME_FILE")
 

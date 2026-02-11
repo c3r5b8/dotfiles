@@ -8,8 +8,7 @@ set $menu fuzzel
 
 exec hypridle
 exec gtklock -d
-exec foot --server
-exec ~/.local/bin/apply_theme.sh
+# exec foot --server &
 exec ~/.local/bin/auto_rotate_screen.sh
 # exec ~/.local/bin/wvkbd --landscape-layers full,cyrillic -l full,cyrillic --hidden
 exec /usr/libexec/sway-systemd/assign-cgroups.py
@@ -21,6 +20,7 @@ exec /usr/libexec/sway-systemd/wait-sni-ready && \
 # exec swaymsg create_output
 exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP QT_QPA_PLATFORMTHEME
 exec ~/.local/bin/autotiling
+exec ~/.local/bin/apply_theme.sh
 
 output eDP-1 {
     resolution 1920x1080@60Hz

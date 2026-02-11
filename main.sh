@@ -61,6 +61,13 @@ enable_service() {
     fi
 }
 
+enable_user_service() {
+    if ! systemctl is-enabled --user --quiet "$1"; then
+        systemctl enable --user --now "$1"
+        echo "enabled and started $1"
+    fi
+}
+
 normalize_dir() {
     local src="$1"
     local dst="$2"
@@ -201,6 +208,7 @@ REQUIRED=(
     rclone
     ripgrep
     krita
+    sdrpp
     starship
     fuzzel
     syncthing
@@ -411,6 +419,10 @@ if command -v fish >/dev/null 2>&1; then
         sudo chsh -s "$FISH_PATH" "$USER"
         echo "changed shell to fish for user $USER"
     fi
+fi
+
+if command -v foot >/dev/null 2>&1; then
+    enable_user_service foot-server
 fi
 
 if [[ ! -d $HOME/.local/share/icons/Papirus/ ]]; then
