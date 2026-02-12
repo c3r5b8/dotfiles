@@ -468,6 +468,15 @@ if command -v stow >/dev/null 2>&1; then
     fi
     download_wallpaper "element" "https://www.mediafire.com/file/lfyhoee4mihie1b/Element.zip/file"
 
+    if ! [[ -f $HOME/.local/bin/lisgd ]]; then
+        git clone https://git.sr.ht/~mil/lisgd
+        cd lisgd
+        cp ../files/config.h .
+        make
+        cp lisgd ~/.local/bin/lisgd
+        cd ..
+        rm -rf lisgd
+    fi
     if ! [[ -f $HOME/.local/bin/wvkbd ]]; then
         git clone https://github.com/jjsullivan5196/wvkbd.git
         cd wvkbd
