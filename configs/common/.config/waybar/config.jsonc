@@ -2,28 +2,7 @@
   "position": "bottom",
   "height": 30,
   "spacing": 0,
-  "modules-left": [
-    "custom/launcher",
-    "custom/keyboard",
-    "clock",
-    "idle_inhibitor",
-    "custom/label_bt",
-    "bluetooth",
-    "network#net2",
-    "network",
-  ],
-  "modules-center": ["sway/workspaces"],
-  "modules-right": [
-    "custom/label_language",
-    "sway/language",
-    "custom/label_pulseaudio",
-    "pulseaudio",
-    "battery#bat2",
-    "battery",
-    "custom/label_backlight",
-    "backlight",
-    "custom/close",
-  ],
+  "include": ["~/.config/waybar/host.jsonc"],
   "sway/workspaces": {
     "persistent-workspaces": {
       "1": ["eDP-1"],
@@ -46,7 +25,7 @@
   "custom/keyboard": {
     "format": "  󰌌  ",
     "tooltip": false,
-"on-click": "bash ~/.local/bin/toggle_wvkbd.sh",
+    "on-click": "bash ~/.local/bin/toggle_wvkbd.sh",
   },
   "custom/close": {
     "format": " 󰅙 ",
