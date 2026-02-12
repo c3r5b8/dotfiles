@@ -403,6 +403,15 @@ if [[ ! -d "$FONT_BASE/Fira" ]]; then
     rm -rf Fira
 fi
 
+if ! grep -q '^input:' /etc/group; then
+    grep '^input:' /usr/lib/group | sudo tee -a /etc/group
+fi
+
+if ! getent group "input" | grep -q "\bc3r5b8\b"; then
+    sudo usermod -aG "input" "c3r5b8"
+    echo "added user c3r5b8 to input"
+fi
+
 if command -v tailscale >/dev/null 2>&1; then
     enable_service tailscaled
 fi
