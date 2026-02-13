@@ -1,0 +1,21 @@
+{
+  "modules-left": [
+    "clock",
+    "idle_inhibitor",
+    "custom/label_bt",
+    "bluetooth",
+    "network#net2",
+    "network",
+  ],
+  "modules-center": ["sway/workspaces"],
+  "modules-right": [
+    "custom/label_language",
+    "sway/language",
+    "custom/label_pulseaudio",
+    "pulseaudio",
+    "battery#bat2",
+    "battery",
+    "custom/label_backlight",
+    "backlight",
+  ],
+}

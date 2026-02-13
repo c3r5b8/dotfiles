@@ -1,0 +1,10 @@
+#exec ~/.local/bin/auto_rotate_screen.sh
+#exec ~/.local/bin/lisgd
+
+output eDP-1 {
+    resolution 3072x1920@120Hz
+    pos 0 0
+    scale 1.5
+}
+
+
