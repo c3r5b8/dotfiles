@@ -19,8 +19,8 @@ bash main.sh
 - Setup telegram
   - Log in
   - Install themes:
-    - [Dark green](https://t.me/addtheme/Gb0JMMgztJLeWF7Q)
-    - [Light green](https://t.me/addtheme/dH0F0uMM7vifFutW)
+    - [Dark](https://t.me/addtheme/ctp_mocha)
+    - [Light](https://t.me/addtheme/ctp_latte)
   - Enable qt feame and hw video decoding, disable "Draw attention to the window"
 - Setup syncthing
   - [local](http://localhost:8384/), [sargas](https://syncthing.c3r5b8.dev/)
