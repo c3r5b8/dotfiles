@@ -27,7 +27,7 @@ double edgessizecaling = 1.0;
  * Check the `/dev/input/eventN`, and find the static name by running
  * the `ls -l /dev/input/by-path`.
  */
-char *device = "/dev/input/event6";
+char *device = "/dev/input/by-path/pci-0000:00:19.1-platform-i2c_designware.2-event";
 
 //Gestures can also be specified interactively from the command line using -g
 Gesture gestures[] = {
