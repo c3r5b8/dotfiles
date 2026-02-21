@@ -8,7 +8,7 @@ set_theme() {
 	local theme=$1
 
 	# bat
-	ln -sf "$CONFIG_DIR/bat/config_$theme" "$CONFIG_DIR/bat/config"
+	# ln -sf "$CONFIG_DIR/bat/config_$theme" "$CONFIG_DIR/bat/config"
 
 	# btop
 	ln -sf "$CONFIG_DIR/btop/btop_$theme.conf" "$CONFIG_DIR/btop/btop.conf"
