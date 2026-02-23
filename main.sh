@@ -249,6 +249,7 @@ if [[ "$HOSTNAME" == "antares" || "$HOSTNAME" == "shaula" ]]; then
 fi
 
 if [[ "$HOSTNAME" == "acrab" ]]; then
+    REQUIRED+=("ddccontrol")
     if ! echo "$RPM_JSON" | jq -r '.deployments[0]."requested-base-removals"[]?' | grep -Fxq "mesa-va-drivers"; then
         echo "Applying override: remove mesa-va-drivers, install mesa-va-drivers-freeworld"
         sudo rpm-ostree override remove mesa-va-drivers --install mesa-va-drivers-freeworld
