@@ -18,6 +18,9 @@ window#waybar {
 #custom-label_language,
 #custom-label_pulseaudio,
 #custom-label_backlight,
+#custom-label_backlight2,
+#custom-brightness,
+#custom-brightness2,
 #custom-keyboard,
 #custom-close,
 #clock,
@@ -42,7 +45,8 @@ window#waybar {
 #network.net2.disconnected {
   color: @red;
 }
-#custom-label_backlight {
+#custom-label_backlight,
+#custom-label_backlight2 {
   color: @yellow;
 }
 #custom-label_language {
