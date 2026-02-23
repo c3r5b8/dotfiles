@@ -204,7 +204,6 @@ REQUIRED=(
     gparted
     inkscape
     iperf3
-    libreoffice
     make
     neovim
     nmap
@@ -354,6 +353,7 @@ REQUIRED_FLATHUB=(
     io.github.ungoogled_software.ungoogled_chromium
     com.moonlight_stream.Moonlight
     com.valvesoftware.Steam
+    org.onlyoffice.desktopeditors
 )
 
 mapfile -t REQUIRED_FLATHUB < <(printf '%s\n' "${REQUIRED_FLATHUB[@]}" | sort -u)
