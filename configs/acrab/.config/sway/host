@@ -21,6 +21,16 @@ workspace 17 output DP-1
 workspace 18 output DP-1
 workspace 19 output DP-1
 workspace 20 output DP-1
+workspace 21 output HEADLESS-1
+workspace 22 output HEADLESS-1
+workspace 23 output HEADLESS-1
+workspace 24 output HEADLESS-1
+workspace 25 output HEADLESS-1
+workspace 26 output HEADLESS-1
+workspace 27 output HEADLESS-1
+workspace 28 output HEADLESS-1
+workspace 29 output HEADLESS-1
+workspace 30 output HEADLESS-1
 
 output HDMI-A-1 {
     resolution 1920x1080@75Hz

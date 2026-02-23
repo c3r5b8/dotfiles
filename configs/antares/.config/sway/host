@@ -1,6 +1,27 @@
 #exec ~/.local/bin/auto_rotate_screen.sh
 #exec ~/.local/bin/lisgd
 
+workspace 1 output eDP-1
+workspace 2 output eDP-1
+workspace 3 output eDP-1
+workspace 4 output eDP-1
+workspace 5 output eDP-1
+workspace 6 output eDP-1
+workspace 7 output eDP-1
+workspace 8 output eDP-1
+workspace 9 output eDP-1
+workspace 10 output eDP-1
+workspace 11 output HEADLESS-1
+workspace 12 output HEADLESS-1
+workspace 13 output HEADLESS-1
+workspace 14 output HEADLESS-1
+workspace 15 output HEADLESS-1
+workspace 16 output HEADLESS-1
+workspace 17 output HEADLESS-1
+workspace 18 output HEADLESS-1
+workspace 19 output HEADLESS-1
+workspace 20 output HEADLESS-1
+
 output eDP-1 {
     resolution 3072x1920@120Hz
     pos 0 0
