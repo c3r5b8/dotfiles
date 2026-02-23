@@ -382,6 +382,12 @@ fi
 if ! flatpak override --user --show com.mikrotik.WinBox | grep -q "QT_QPA_PLATFORM=xcb"; then
     flatpak override --user --env="QT_QPA_PLATFORM=xcb" "com.mikrotik.WinBox"
 fi
+
+if [[ ! -f "$HOME/.local/bin/autotiling" ]]; then
+    curl -fsSL https://raw.githubusercontent.com/nwg-piotr/autotiling/refs/heads/master/autotiling/main.py -o "$HOME/.local/bin/autotiling"
+    chmod +x "$HOME/.local/bin/autotiling"
+fi
+
 if [[ ! -d "$HOME/.local/share/themes/catppuccin-latte-green-standard+default" || ! -d "$HOME/.local/share/themes/catppuccin-mocha-green-standard+default" ]]; then
     echo "Installing Catppuccin GTK themes"
 
