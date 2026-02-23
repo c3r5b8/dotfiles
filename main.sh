@@ -140,6 +140,15 @@ EOF
 
 set_file "/etc/NetworkManager/conf.d/99_rand_mac.conf" "$nm_config" "0644"
 
+if [[ "$HOSTNAME" == "shaula" ]]; then
+    nm_wifi_config=$(
+        cat <<EOF
+    [connection]
+    wifi.powersave = 2
+EOF
+    )
+    set_file "/etc/NetworkManager/conf.d/98_wifi_powersave.conf" "$nm_wifi_config" "0644"
+fi
 enable_service sshd
 
 if ! echo "$RPM_JSON" | jq -r '
