@@ -33,6 +33,11 @@ window#waybar {
   font-weight: 900;
   color: @text;
 }
+
+#pulseaudio.muted {
+  color: @peach;
+}
+
 #custom-label_pulseaudio {
   color: @sky;
 }

@@ -67,6 +67,7 @@
   "pulseaudio": {
     "tooltip": false,
     "format": "{volume}%",
+    "format-muted": "muted",
   },
   "battery#bat2": {
     "tooltip": false,
