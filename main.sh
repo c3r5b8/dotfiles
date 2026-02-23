@@ -257,6 +257,10 @@ if [[ "$HOSTNAME" == "antares" || "$HOSTNAME" == "shaula" ]]; then
     REQUIRED+=("intel-media-driver" "igt-gpu-tools")
 fi
 
+if [[ "$HOSTNAME" == "shaula" ]]; then
+    REQUIRED+=("waydroid")
+fi
+
 if [[ "$HOSTNAME" == "acrab" ]]; then
     REQUIRED+=("ddccontrol")
     if ! echo "$RPM_JSON" | jq -r '.deployments[0]."requested-base-removals"[]?' | grep -Fxq "mesa-va-drivers"; then
