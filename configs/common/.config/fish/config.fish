@@ -1,6 +1,15 @@
 if status is-interactive
     set -gx PATH $HOME/go/bin $HOME/.local/bin $PATH
 
+    set -gx GOROOT "$HOME/.go"
+    fish_add_path "$GOROOT/bin"
+
+    set -gx GOPATH "$HOME/.local/share/go"
+    set -gx GOBIN "$HOME/.local/bin"
+    fish_add_path "$GOBIN"
+
+    mkdir -p "$GOPATH/src" "$GOBIN"
+
     set -gx EDITOR nvim
     set -gx VISUAL nvim
 
