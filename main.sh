@@ -457,6 +457,32 @@ if [[ ! -d $HOME/.local/share/icons/Papirus/ ]]; then
     wget -qO- https://git.io/papirus-icon-theme-install | env DESTDIR="$HOME/.local/share/icons" sh
 fi
 
+ZONE="public"
+
+PORTS=(
+    "47984/tcp"
+    "47989/tcp"
+    "48010/tcp"
+    "47998/udp"
+    "47999/udp"
+    "48000/udp"
+    "48002/udp"
+    "48010/udp"
+)
+
+CHANGED=false
+
+for port in "${PORTS[@]}"; do
+    if ! sudo firewall-cmd --zone="$ZONE" --query-port="$port" --permanent 2>/dev/null; then
+        sudo firewall-cmd --zone="$ZONE" --add-port="$port" --permanent
+        CHANGED=true
+    fi
+done
+
+if [ "$CHANGED" = true ]; then
+    sudo firewall-cmd --reload
+fi
+
 if [[ ! -f $HOME/.local/bin/papirus-folders ]]; then
     wget -qO- https://git.io/papirus-folders-install | env PREFIX="$HOME/.local" sh
     git clone https://github.com/c3r5b8/papirus-folders.git
