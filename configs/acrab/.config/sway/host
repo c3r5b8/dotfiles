@@ -42,3 +42,7 @@ output DP-1 {
     pos 1920 0
 }
 
+output HEADLESS-1 {
+    resolution 1920x1200@60Hz
+    pos 0 1080
+}
