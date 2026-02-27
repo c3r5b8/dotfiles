@@ -353,6 +353,7 @@ REQUIRED_FLATHUB=(
     com.moonlight_stream.Moonlight
     com.valvesoftware.Steam
     org.onlyoffice.desktopeditors
+    com.heroicgameslauncher.hgl
 )
 
 mapfile -t REQUIRED_FLATHUB < <(printf '%s\n' "${REQUIRED_FLATHUB[@]}" | sort -u)
