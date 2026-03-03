@@ -383,6 +383,10 @@ if ! flatpak override --user --show com.mikrotik.WinBox | grep -q "QT_QPA_PLATFO
     flatpak override --user --env="QT_QPA_PLATFORM=xcb" "com.mikrotik.WinBox"
 fi
 
+if [[ ! -d "$HOME/.local/bin" ]]; then
+	mkdir -p "$HOME/.local/bin"
+fi
+
 if [[ ! -f "$HOME/.local/bin/autotiling" ]]; then
     curl -fsSL https://raw.githubusercontent.com/nwg-piotr/autotiling/refs/heads/master/autotiling/main.py -o "$HOME/.local/bin/autotiling"
     chmod +x "$HOME/.local/bin/autotiling"
