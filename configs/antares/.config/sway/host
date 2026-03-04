@@ -28,4 +28,7 @@ output eDP-1 {
     scale 1.5
 }
 
-
+output HEADLESS-1 {
+    resolution 1920x1200@60Hz
+    pos 0 1280
+}
