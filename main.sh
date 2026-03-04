@@ -354,6 +354,7 @@ REQUIRED_FLATHUB=(
     com.valvesoftware.Steam
     org.onlyoffice.desktopeditors
     com.heroicgameslauncher.hgl
+    md.obsidian.Obsidian
 )
 
 mapfile -t REQUIRED_FLATHUB < <(printf '%s\n' "${REQUIRED_FLATHUB[@]}" | sort -u)
