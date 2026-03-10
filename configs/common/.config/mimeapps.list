@@ -1,0 +1,9 @@
+[Default Applications]
+application/pdf=org.mozilla.firefox.desktop
+application/x-pdf=org.mozilla.firefox.desktop
+application/acrobat=org.mozilla.firefox.desktop
+application/vnd.pdf=org.mozilla.firefox.desktop
+text/pdf=org.mozilla.firefox.desktop
+
+[Added Associations]
+application/pdf=org.mozilla.firefox.desktop
