@@ -4,6 +4,11 @@ application/x-pdf=org.mozilla.firefox.desktop
 application/acrobat=org.mozilla.firefox.desktop
 application/vnd.pdf=org.mozilla.firefox.desktop
 text/pdf=org.mozilla.firefox.desktop
+x-scheme-handler/cider=Cider.desktop
+x-scheme-handler/itms=Cider.desktop
+x-scheme-handler/itmss=Cider.desktop
+x-scheme-handler/music=Cider.desktop
+x-scheme-handler/itunes=Cider.desktop
 
 [Added Associations]
 application/pdf=org.mozilla.firefox.desktop
