@@ -355,6 +355,7 @@ REQUIRED_FLATHUB=(
     org.onlyoffice.desktopeditors
     com.heroicgameslauncher.hgl
     md.obsidian.Obsidian
+    org.signal.Signal
 )
 
 mapfile -t REQUIRED_FLATHUB < <(printf '%s\n' "${REQUIRED_FLATHUB[@]}" | sort -u)
@@ -385,7 +386,7 @@ if ! flatpak override --user --show com.mikrotik.WinBox | grep -q "QT_QPA_PLATFO
 fi
 
 if [[ ! -d "$HOME/.local/bin" ]]; then
-	mkdir -p "$HOME/.local/bin"
+    mkdir -p "$HOME/.local/bin"
 fi
 
 if [[ ! -f "$HOME/.local/bin/autotiling" ]]; then
