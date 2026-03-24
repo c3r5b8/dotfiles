@@ -1,4 +1,4 @@
-# Fedora silverblue setup
+# Fedora Sericea setup
 
 ## Seup steps
 
