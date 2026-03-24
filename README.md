@@ -15,6 +15,7 @@ bash main.sh
   - Firefox settings
   - Setup Bitwarden
   - Add css to vimium
+  - Add script to tampermonkey
   - Import config in stylus [Catppuccin Userstyles Customizer](https://catppuccin-userstyles-customizer.uncenter.dev)
 - Setup telegram
   - Log in
