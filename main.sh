@@ -136,6 +136,20 @@ EOF
 )
 set_file "/etc/sddm.conf.d/autologin.conf" "$sddm_config" "0644"
 
+logind_config=$(
+    cat <<EOF
+    [Login]
+    HandlePowerKey=suspend
+    HandleLidSwitch=ignore
+    HandleLidSwitchExternalPower=ignore
+    HandleLidSwitchDocked=ignore
+EOF
+)
+if [[ ! -d /etc/systemd/logind.conf.d/ ]]; then
+    sudo mkdir -p /etc/systemd/logind.conf.d/
+fi
+set_file "/etc/systemd/logind.conf.d/50-cust.conf" "$logind_config" "0644"
+
 nm_config=$(
     cat <<EOF
     [connection-mac-randomization]
