@@ -63,6 +63,8 @@ if status is-interactive
     abbr gcm 'git commit -m'
     abbr .. 'cd ..'
     abbr ... 'cd ../..'
+    abbr .... 'cd ../../..'
+    abbr ..... 'cd ../../../..'
 
     function ssh --description 'Wrap ssh with TERM=xterm-256color'
         set -lx TERM xterm-256color
