@@ -120,6 +120,12 @@ RPM_JSON="$(rpm-ostree status --json)"
 INSTALLED_FLATPAKS="$(flatpak list --app --columns=application)"
 FONT_BASE="$HOME/.local/share/fonts"
 
+if [[ ! -d /home/c3r5b8/.config/mozilla/firefox/c3r5b8.default-release ]]; then
+    mkdir -p /home/c3r5b8/.config/mozilla/firefox/c3r5b8.default-release
+    firefox -CreateProfile "c3r5b8 /home/c3r5b8/.config/mozilla/firefox/c3r5b8.default-release"
+    ln -sf ../../../dev/dotfiles/configs/common/.config/mozilla/firefox/profiles.ini /home/c3r5b8/.config/mozilla/firefox/profiles.ini
+fi
+
 set_file "/etc/sudoers.d/00_c3r5b8" "c3r5b8 ALL=(ALL:ALL) NOPASSWD: ALL" "0440"
 sddm_config=$(
     cat <<EOF

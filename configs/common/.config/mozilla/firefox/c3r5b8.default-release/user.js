@@ -1,0 +1,26 @@
+user_pref("browser.startup.page", 3);
+user_pref("browser.discovery.enabled", false);
+user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
+user_pref("browser.newtabpage.activity-stream.telemetry", false);
+user_pref("app.shield.optoutstudies.enabled", false);
+user_pref("app.normandy.enabled", false);
+user_pref("app.normandy.api_url", "");
+user_pref("browser.ai.control.linkPreviewKeyPoints", "blocked");
+user_pref("browser.ai.control.sidebarChatbot", "blocked");
+user_pref("browser.display.use_document_fonts", 0);
+user_pref("browser.ml.chat.enabled", false);
+user_pref("browser.ml.chat.page", false);
+user_pref("browser.ml.linkPreview.enabled", false);
+user_pref("browser.newtabpage.activity-stream.showSponsoredCheckboxes", false);
+user_pref("browser.search.suggest.enabled.private", true);
+user_pref("browser.tabs.groups.smart.userEnabled", false);
+user_pref("browser.tabs.inTitlebar", 0);
+user_pref("browser.uiCustomization.state", "{\"placements\":{\"widget-overflow-fixed-list\":[],\"unified-extensions-area\":[\"newtaboverride_agenedia_com-browser-action\",\"addon_darkreader_org-browser-action\",\"_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action\"],\"nav-bar\":[\"back-button\",\"forward-button\",\"stop-reload-button\",\"vertical-spacer\",\"urlbar-container\",\"downloads-button\",\"fxa-toolbar-menu-button\",\"unified-extensions-button\",\"ublock0_raymondhill_net-browser-action\",\"_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action\",\"_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action\"],\"toolbar-menubar\":[\"menubar-items\"],\"TabsToolbar\":[\"tabbrowser-tabs\",\"new-tab-button\"],\"vertical-tabs\":[],\"PersonalToolbar\":[]},\"seen\":[\"developer-button\",\"screenshot-button\",\"newtaboverride_agenedia_com-browser-action\",\"addon_darkreader_org-browser-action\",\"_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action\",\"ublock0_raymondhill_net-browser-action\",\"_d7742d87-e61d-4b78-b8a1-b469842139fa_-browser-action\",\"_7a7a4a92-a2a0-41d1-9fd7-1e92480d612d_-browser-action\"],\"dirtyAreaCache\":[\"nav-bar\",\"vertical-tabs\",\"unified-extensions-area\",\"toolbar-menubar\",\"TabsToolbar\",\"PersonalToolbar\"],\"currentVersion\":23,\"newElementCount\":3}");
+user_pref("browser.urlbar.placeholderName", "DuckDuckGo");
+user_pref("browser.urlbar.placeholderName.private", "DuckDuckGo");
+user_pref("datareporting.healthreport.uploadEnabled", false);
+user_pref("datareporting.usage.uploadEnabled", false);
+user_pref("extensions.formautofill.addresses.enabled", false);
+user_pref("extensions.formautofill.creditCards.enabled", false);
+user_pref("font.size.monospace.x-western", 14);
+
