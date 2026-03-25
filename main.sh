@@ -479,6 +479,10 @@ if command -v foot >/dev/null 2>&1; then
     enable_user_service foot-server
 fi
 
+if command -v sunshine >/dev/null 2>&1; then
+    enable_user_service app-dev.lizardbyte.app.Sunshine.service
+fi
+
 if [[ ! -d $HOME/.local/share/icons/Papirus/ ]]; then
     wget -qO- https://git.io/papirus-icon-theme-install | env DESTDIR="$HOME/.local/share/icons" sh
 fi
