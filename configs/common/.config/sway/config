@@ -47,7 +47,7 @@ seat * {
 
 floating_modifier $mod normal
 
-bindsym {
+bindsym --to-code {
     $mod+space exec $term
     $mod+Shift+q kill
     $mod+d exec $menu
