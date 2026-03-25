@@ -486,6 +486,10 @@ fi
 ZONE="public"
 
 PORTS=(
+    # iperf3
+    "5201/tcp"
+    "5201/udp"
+    # sunshine
     "47984/tcp"
     "47989/tcp"
     "48010/tcp"
