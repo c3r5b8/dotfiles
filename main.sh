@@ -267,6 +267,7 @@ REQUIRED=(
     gtklock
     gtk3-devel
     chayang
+    mate-polkit
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
