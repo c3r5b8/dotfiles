@@ -268,6 +268,7 @@ REQUIRED=(
     gtk3-devel
     chayang
     mate-polkit
+    ansible
 )
 
 REMOVE_IGNORE=(ffmpeg rpmfusion-free-release rpmfusion-nonfree-release)
