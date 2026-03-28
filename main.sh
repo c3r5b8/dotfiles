@@ -411,6 +411,10 @@ if [[ ! -d "$HOME/.local/bin" ]]; then
     mkdir -p "$HOME/.local/bin"
 fi
 
+if [[ ! -f "$HOME/.local/bin/flux" ]]; then
+    curl -s https://fluxcd.io/install.sh | bash -s ~/.local/bin
+fi
+
 if [[ ! -f "$HOME/.local/bin/autotiling" ]]; then
     curl -fsSL https://raw.githubusercontent.com/nwg-piotr/autotiling/refs/heads/master/autotiling/main.py -o "$HOME/.local/bin/autotiling"
     chmod +x "$HOME/.local/bin/autotiling"
