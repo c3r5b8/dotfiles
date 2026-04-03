@@ -1,5 +1,5 @@
 #exec ~/.local/bin/auto_rotate_screen.sh
-#exec ~/.local/bin/lisgd
+exec swaymsg create_output
 
 workspace 1 output HDMI-A-1
 workspace 2 output HDMI-A-1
@@ -44,5 +44,6 @@ output DP-1 {
 
 output HEADLESS-1 {
     resolution 1920x1200@60Hz
+    disable
     pos 0 1080
 }

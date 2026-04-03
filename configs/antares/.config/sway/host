@@ -1,5 +1,5 @@
 #exec ~/.local/bin/auto_rotate_screen.sh
-#exec ~/.local/bin/lisgd
+exec swaymsg create_output
 
 workspace 1 output eDP-1
 workspace 2 output eDP-1
@@ -30,5 +30,6 @@ output eDP-1 {
 
 output HEADLESS-1 {
     resolution 1920x1200@60Hz
+    disable
     pos 0 1280
 }
