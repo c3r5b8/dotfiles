@@ -415,6 +415,12 @@ if [[ ! -f "$HOME/.local/bin/flux" ]]; then
     curl -s https://fluxcd.io/install.sh | bash -s ~/.local/bin
 fi
 
+if [[ ! -f "$HOME/.local/bin/sops" ]]; then
+    download_from_github "https://api.github.com/repos/getsops/sops/releases/latest" "sops-.*linux.amd64"
+    mv sops* "$HOME/.local/bin/sops"
+    chmod +x "$HOME/.local/bin/sops"
+fi
+
 if [[ ! -f "$HOME/.local/bin/autotiling" ]]; then
     curl -fsSL https://raw.githubusercontent.com/nwg-piotr/autotiling/refs/heads/master/autotiling/main.py -o "$HOME/.local/bin/autotiling"
     chmod +x "$HOME/.local/bin/autotiling"
@@ -531,6 +537,17 @@ if [[ ! -f "$HOME/.go/bin/go" ]]; then
     mkdir -p "$HOME/.go"
     tar -C "$HOME/.go" -xzf "/tmp/$GO_TARBALL" --strip-components=1
     mkdir -p "$HOME/.local/share/go"
+fi
+
+if [[ ! -f "$HOME/.local/bin/ssh-to-age" ]]; then
+    go install github.com/Mic92/ssh-to-age/cmd/ssh-to-age@latest
+fi
+
+if [[ ! -f "$HOME/.config/sops/age/keys.txt" ]]; then
+    if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
+        mkdir -p "$HOME/.config/sops/age"
+        ssh-to-age -private-key -i "$HOME/.ssh/id_ed25519" >"$HOME/.config/sops/age/keys.txt"
+    fi
 fi
 
 if [[ ! -f $HOME/.local/bin/papirus-folders ]]; then

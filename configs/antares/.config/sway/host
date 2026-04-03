@@ -31,5 +31,5 @@ output eDP-1 {
 output HEADLESS-1 {
     resolution 1920x1200@60Hz
     disable
-    pos 0 1280
+    pos 2048 0
 }
