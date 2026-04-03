@@ -140,7 +140,7 @@ logind_config=$(
     cat <<EOF
     [Login]
     HandlePowerKey=suspend
-    HandleLidSwitch=ignore
+    HandleLidSwitch=suspend
     HandleLidSwitchExternalPower=ignore
     HandleLidSwitchDocked=ignore
 EOF
