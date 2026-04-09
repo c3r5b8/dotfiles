@@ -540,13 +540,13 @@ if [[ ! -f "$HOME/.go/bin/go" ]]; then
 fi
 
 if [[ ! -f "$HOME/.local/bin/ssh-to-age" ]]; then
-    go install github.com/Mic92/ssh-to-age/cmd/ssh-to-age@latest
+   GOPATH="$HOME/.local/share/go" GOBIN="$HOME/.local/bin" "$HOME/.go/bin/go" install github.com/Mic92/ssh-to-age/cmd/ssh-to-age@latest
 fi
 
 if [[ ! -f "$HOME/.config/sops/age/keys.txt" ]]; then
     if [[ -f "$HOME/.ssh/id_ed25519" ]]; then
         mkdir -p "$HOME/.config/sops/age"
-        ssh-to-age -private-key -i "$HOME/.ssh/id_ed25519" >"$HOME/.config/sops/age/keys.txt"
+        "$HOME/.local/bin/ssh-to-age" -private-key -i "$HOME/.ssh/id_ed25519" >"$HOME/.config/sops/age/keys.txt"
     fi
 fi
 
