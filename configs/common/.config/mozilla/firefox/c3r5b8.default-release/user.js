@@ -23,4 +23,4 @@ user_pref("datareporting.usage.uploadEnabled", false);
 user_pref("extensions.formautofill.addresses.enabled", false);
 user_pref("extensions.formautofill.creditCards.enabled", false);
 user_pref("font.size.monospace.x-western", 14);
-
+user_pref("browser.toolbars.bookmarks.visibility", "never");
