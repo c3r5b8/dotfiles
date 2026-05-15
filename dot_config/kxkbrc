@@ -1,0 +1,8 @@
+[Layout]
+DisplayNames=,
+LayoutList=us,ua
+Options=caps:escape_shifted_capslock
+ResetOldOptions=true
+SwitchMode=Window
+Use=true
+VariantList=,

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+{{ $hostname := .chezmoi.hostname }}
+
+WANTED_GENERAL=({{ range .packages.dnf }}{{printf "%q " .}}{{end}})
+WANTED_HOST=({{ range (index .host $hostname) }}{{printf "%q " .}}{{end}})
+WANTED=("${WANTED_GENERAL[@]}" "${WANTED_HOST[@]}")
+  CURRENT=$(rpm-ostree status --json | jq -r '.deployments[0].packages[]?' 2>/dev/null | sort -u || echo "")
+
+  WANTED_SORTED=$(printf '%s\n' "${WANTED[@]}" | sort -u)
+
+  MISSING=$(comm -13 <(echo "$CURRENT") <(echo "$WANTED_SORTED") || true)
+  if [ -n "$MISSING" ]; then
+    echo "Layering missing packages: $MISSING"
+    echo "$MISSING" | xargs sudo rpm-ostree install
+  fi
+
+  TO_REMOVE=$(comm -23 <(echo "$CURRENT") <(echo "$WANTED_SORTED") || true)
+  if [ -n "$TO_REMOVE" ]; then
+    echo "Removing undeclared layered packages: $TO_REMOVE"
+    echo "$TO_REMOVE" | xargs sudo rpm-ostree remove
+  fi
+
+if ! flatpak remotes --columns=name | grep -qx flathub; then
+    sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    echo "enabled flathub"
+fi
+
+WANTED_FP=({{ range .packages.flatpak }}{{printf "%q " .}}{{end}})
+  if [ ${#WANTED_FP[@]} -gt 0 ]; then
+    CURRENT_FP=$(flatpak list --app --columns=application | sort || true)
+    WANTED_FP_SORTED=$(printf '%s\n' "${WANTED_FP[@]}" | sort -u)
+
+    MISSING_FP=$(comm -13 <(echo "$CURRENT_FP") <(echo "$WANTED_FP_SORTED") || true)
+    if [ -n "$MISSING_FP" ]; then
+      echo "Installing missing Flatpaks: $MISSING_FP"
+      echo "$MISSING_FP" | xargs flatpak install --noninteractive -y flathub
+    fi
+
+    TO_REMOVE_FP=$(comm -23 <(echo "$CURRENT_FP") <(echo "$WANTED_FP_SORTED") || true)
+    if [ -n "$TO_REMOVE_FP" ]; then
+      echo "Removing undeclared Flatpaks: $TO_REMOVE_FP"
+      echo "$TO_REMOVE_FP" | xargs flatpak uninstall --noninteractive -y
+    fi
+  fi
+

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+{{ if lookPath "fish" }}
+    FISH_PATH="$(command -v fish)"
+    CURRENT_SHELL="$(getent passwd "$USER" | cut -d: -f7)"
+
+    if [[ "$CURRENT_SHELL" != "$FISH_PATH" ]]; then
+        sudo chsh -s "$FISH_PATH" "$USER"
+        echo "changed shell to fish for user $USER"
+    fi
+{{ end }}

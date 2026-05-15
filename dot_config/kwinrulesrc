@@ -1,0 +1,10 @@
+[General]
+count=1
+rules=ceae9047-9fd6-446a-8069-9897c3d51fb0
+
+[ceae9047-9fd6-446a-8069-9897c3d51fb0]
+Description=krohnkite
+maximizehorizrule=2
+maximizevertrule=2
+minsizerule=2
+types=1

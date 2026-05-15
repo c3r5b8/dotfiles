@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+{{ if (or (eq .chezmoi.hostname "antares") (eq .chezmoi.hostname "shaula")) }}
+
+file="/etc/NetworkManager/conf.d/99_rand_mac.conf"
+required=$(
+    cat <<EOF
+    [connection-mac-randomization]
+    wifi.cloned-mac-address=permanent
+    ethernet.cloned-mac-address=permanent
+EOF
+)
+perms="0640"
+
+if [[ "$(sudo cat "$file" 2>/dev/null)" != "$required" ]]; then
+    echo "$required" | sudo tee "$file" >/dev/null
+    sudo chmod "$perms" "$file"
+    echo "created $file file"
+fi
+
+{{ end }}
+
+{{ if eq .chezmoi.hostname "shaula" }}
+
+file="/etc/NetworkManager/conf.d/98_wifi_powersave.conf"
+required=$(
+        cat <<EOF
+    [connection]
+    wifi.powersave = 2
+EOF
+)
+
+perms="0640"
+
+if [[ "$(sudo cat "$file" 2>/dev/null)" != "$required" ]]; then
+    echo "$required" | sudo tee "$file" >/dev/null
+    sudo chmod "$perms" "$file"
+    echo "created $file file"
+fi
+
+{{ end }}

@@ -1,6 +1,0 @@
-[cidercollective]
-name=Cider Collective Repository
-baseurl=https://repo.cider.sh/rpm/RPMS
-enabled=1
-gpgcheck=1
-gpgkey=https://repo.cider.sh/RPM-GPG-KEY

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+{{ if eq .chezmoi.hostname "shaula" }}
+    INITRAMFS_ENABLED="$( rpm-ostree status --json | jq -r '.deployments[0]["regenerate-initramfs"]')"
+    if [[ "$INITRAMFS_ENABLED" != "true" ]]; then
+        sudo rpm-ostree initramfs --enable
+        echo "enabled initramfs regeneration"
+    fi
+    if ! rpm-ostree status --json | jq -r '.deployments[0]["requested-local-packages"][]?' | grep -q '^intel-ish-firmware'; then
+        sudo rpm-ostree install https://github.com/c3r5b8/dotfiles/raw/refs/heads/main/files/intel-ish-firmware-0.1.rpm
+        echo "installed intel-ish-firmware"
+        echo "reboot required"
+    fi
+{{ end }}
+# {{ if eq .chezmoi.hostname "acrab" }}
+# if ! rpm -q --quiet mesa-va-drivers-freeworld; then
+#         # sudo rpm-ostree override remove mesa-va-drivers --install mesa-va-drivers-freeworld
+# fi
+# {{ end }}

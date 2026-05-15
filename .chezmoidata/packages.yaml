@@ -1,0 +1,81 @@
+packages:
+  dnf:
+    - age
+    - android-tools
+    - bat
+    - btop
+    - Cider
+    - clang
+    - fastfetch
+    - fd-find
+    - fish
+    - fzf
+    - gcc
+    - git
+    - gparted
+    - gstreamer1-plugins-bad-free-extras
+    - gstreamer1-plugins-bad-freeworld
+    - gstreamer1-plugins-ugly
+    - inkscape
+    - iperf3
+    - krita
+    - make
+    - neovim
+    - NetworkManager-l2tp
+    - NetworkManager-l2tp-gnome
+    - nmap
+    - nodejs
+    - nodejs-npm
+    - nvtop
+    - onefetch
+    - p7zip
+    - qbittorrent
+    - rclone
+    - ripgrep
+    - sdrpp
+    - starship
+    - steam-devices
+    - syncthing
+    - tailscale
+    - telegram-desktop
+    - thunderbird
+    - tokei
+    - wireshark
+    - xxd
+    - yazi
+    - Sunshine
+    - bibata-cursor-themes
+    - Koi
+    - kate
+    # installed from other scripts
+    - rpmfusion-free-release
+    - rpmfusion-nonfree-release
+    - ffmpeg
+  flatpak:
+    - org.gimp.GIMP
+    - org.jellyfin.JellyfinDesktop
+    - com.mikrotik.WinBox
+    - io.github.ungoogled_software.ungoogled_chromium
+    - com.moonlight_stream.Moonlight
+    - com.valvesoftware.Steam
+    - org.onlyoffice.desktopeditors
+    - com.heroicgameslauncher.hgl
+    - md.obsidian.Obsidian
+    - org.signal.Signal
+    - chat.rocket.RocketChat
+    # default
+    - org.kde.elisa
+    - org.kde.gwenview
+    - org.kde.kcalc
+    - org.kde.kmahjongg
+    - org.kde.kmines
+    - org.kde.kolourpaint
+    - org.kde.krdc
+    - org.kde.okular
+    - org.kde.skanpage
+host:
+  shaula:
+    - intel-media-driver
+    # - https://github.com/c3r5b8/dotfiles/raw/refs/heads/main/files/intel-ish-firmware-0.1.rpm
+  antares:
+    - intel-media-driver

@@ -1,0 +1,8 @@
+#!/usr/bin/env chezmoi_modify_manager
+
+source auto
+
+ignore section "MainWindow"
+ignore section "KPropertiesDialog"
+ignore "General" "ViewPropsTimestamp"
+ignore "Open-with settings" "History"

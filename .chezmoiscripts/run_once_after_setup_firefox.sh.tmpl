@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+SOURCE="{{ .chezmoi.homeDir }}/.config/mozilla/firefox/user.js"
+PROFILES_INI="{{ .chezmoi.homeDir }}/.config/mozilla/firefox/profiles.ini"
+
+PROFILE_PATH=$(awk -F= '
+    /^\[/ { section=$0 }
+    /^Default=1/ { is_default=1 }
+    /^Path=/ && is_default { print $2; exit }
+' "$PROFILES_INI" 2>/dev/null || true)
+
+if [ -z "$PROFILE_PATH" ]; then
+    echo "No default Firefox profile found."
+    exit 0
+fi
+
+TARGET="{{ .chezmoi.homeDir }}/.config/mozilla/firefox/$PROFILE_PATH/user.js"
+
+cp "$SOURCE" "$TARGET"
+echo "Firefox user.js deployed to: $PROFILE_PATH"

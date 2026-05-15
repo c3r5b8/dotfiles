@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+{{ if lookPath "tailscale" }}
+    if ! systemctl is-enabled --quiet "tailscaled"; then
+        sudo systemctl enable --now "tailscaled"
+        echo "enabled and started tailscaled"
+    fi
+{{ end }}

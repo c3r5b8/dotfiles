@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+{{ range $name, $content := (index .repos "custom" | default dict) }}
+if [[ ! -f "/etc/yum.repos.d/{{ $name }}.repo" ]]; then
+    echo "Creating /etc/yum.repos.d/{{ $name }}.repo"
+    echo "{{ $content -}}" | sudo tee "/etc/yum.repos.d/{{ $name }}.repo" >/dev/null
+fi
+{{ end }}
+
+{{ $urlRepos := index .repos "url" | default (dict) }}
+{{ range $name, $url := $urlRepos }}
+if [[ ! -f "/etc/yum.repos.d/{{ $name }}.repo" ]]; then
+    echo "Downloading {{ $name }} repo from {{ $url }}"
+    sudo curl -fsSL "{{ $url }}" -o "/etc/yum.repos.d/{{ $name }}.repo"
+fi
+{{ end }}
+
+{{ $coprRepos := index .repos "copr" | default (list) }}
+{{ range $slug := $coprRepos }}
+slug="{{ $slug }}"
+owner=$(printf '%s' "$slug" | cut -d/ -f1)
+project=$(printf '%s' "$slug" | cut -d/ -f2)
+fedora_version=$(rpm -E %{fedora})
+url="https://copr.fedorainfracloud.org/coprs/${owner}/${project}/repo/fedora-${fedora_version}/${owner}-${project}-fedora-${fedora_version}.repo"
+filename="${owner}-${project}-fedora-${fedora_version}.repo"
+if [[ ! -f "${filename}" ]]; then
+    echo "Setting up COPR {{ $slug }}"
+    sudo curl -fsSL "$url" -o "/etc/yum.repos.d/${filename}"
+fi
+{{ end }}
