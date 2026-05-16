@@ -1,2 +1,5 @@
+[AC][SuspendAndShutdown]
+AutoSuspendAction=0
+
 [BatteryManagement]
 BatteryCriticalLevel=2
