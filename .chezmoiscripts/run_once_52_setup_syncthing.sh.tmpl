@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-{{ if lookPath "syncthing" }}
-    if ! systemctl is-enabled --quiet "syncthing@c3r5b8"; then
-        sudo systemctl enable --now "syncthing@c3r5b8"
-        echo "enabled and started syncthing@c3r5b8"
-    fi
-{{ end }}

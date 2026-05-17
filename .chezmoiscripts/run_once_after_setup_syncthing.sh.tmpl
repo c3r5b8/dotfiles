@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+{{ if lookPath "syncthing" }}
+if ! systemctl is-enabled --quiet "syncthing@c3r5b8"; then
+  sudo systemctl enable --now "syncthing@c3r5b8"
+  echo "enabled and started syncthing@c3r5b8"
+  sleep 5
+fi
+
+sudo systemctl stop syncthing@c3r5b8
+find "${HOME}/.local/state/syncthing" -mindepth 1 -maxdepth 1 \
+    ! -name "key.pem" \
+    ! -name "cert.pem" \
+    -exec rm -rf {} + || true
+sudo systemctl start syncthing@c3r5b8
+
+declare -A devices=(
+  ["shaula"]="NMOAFEJ-JQQ3GP6-BXQHPFR-KKTNQJM-EGBEXQ2-RGSMKHA-OREPZKU-R5BH4Q2"
+  ["sargas"]="BWOM2WU-ZRTTBHK-XOP4L4W-SFKKH7W-JMZGCR3-VQANVTU-QKHRWVQ-G2OMZQQ"
+  ["antares"]="DARR3YD-Z3FLLZI-6DLRNKW-AZZHC6C-GZNVNUC-WGX7S4V-OGQ356A-BUXRKA3"
+  ["acrab"]="QH3E5AJ-KS6U7QT-SGTVYOA-SQKVTKB-IV26TWG-WKUXQFT-WAAKG7K-SUBEKAU"
+  ["husky"]="BF6Q5ZI-7YR64WX-OSA4YYG-YG36GLC-M5N4I5L-NUFYW5L-MT2AA3G-L7ZMXQD"
+)
+
+for name in "${!devices[@]}"; do
+  id="${devices[$name]}"
+  if ! syncthing cli config devices list | grep -q "$id"; then
+    echo "Adding device: $name"
+    syncthing cli config devices add --device-id "$id" --name "$name"
+  else
+    echo "Device already present: $name"
+  fi
+done
+
+FOLDER_ID="notes"
+FOLDER_LABEL="notes"
+FOLDER_PATH="/home/c3r5b8/documents/notes"
+mkdir -p "$FOLDER_PATH"
+
+if ! syncthing cli config folders list | grep -q "\"$FOLDER_ID\""; then
+  echo "Adding folder: $FOLDER_LABEL"
+  syncthing cli config folders add \
+    --id "$FOLDER_ID" \
+    --label "$FOLDER_LABEL" \
+    --path "$FOLDER_PATH"
+fi
+
+for name in "${!devices[@]}"; do
+  id="${devices[$name]}"
+  if ! syncthing cli config folders "$FOLDER_ID" devices list | grep -q "$id"; then
+    echo "Sharing $FOLDER_LABEL with $name"
+    syncthing cli config folders "$FOLDER_ID" devices add --device-id "$id"
+  fi
+done
+{{ end }}
