@@ -1,0 +1,25 @@
+{
+  "apps": [
+    {
+      "auto-detach": true,
+      "cmd": "",
+      "elevated": false,
+      "exclude-global-prep-cmd": false,
+      "exit-timeout": 5,
+      "image-path": "",
+      "name": "Virtual screen",
+      "output": "",
+      "prep-cmd": [
+        {
+          "do": "kscreen-doctor output.Virtual-sunshine.enable",
+          "undo": "kscreen-doctor output.Virtual-sunshine.disable"
+        }
+      ],
+      "wait-all": true
+    }
+  ],
+  "env": {
+    "PATH": "$(PATH):$(HOME)/.local/bin"
+  }
+}
+

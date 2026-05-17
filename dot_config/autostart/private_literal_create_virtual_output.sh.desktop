@@ -1,0 +1,6 @@
+[Desktop Entry]
+Exec=/var/home/c3r5b8/.local/bin/create_virtual_output.sh
+Icon=application-x-shellscript
+Name=create_virtual_output.sh
+Type=Application
+X-KDE-AutostartScript=true
