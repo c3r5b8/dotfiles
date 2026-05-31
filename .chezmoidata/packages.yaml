@@ -21,8 +21,6 @@ packages:
     - krita
     - make
     - neovim
-    - NetworkManager-l2tp
-    - NetworkManager-l2tp-gnome
     - nmap
     - nodejs
     - nodejs-npm
