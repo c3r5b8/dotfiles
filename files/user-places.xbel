@@ -147,41 +147,6 @@
    </metadata>
   </info>
  </bookmark>
- <separator>
-  <info>
-   <metadata owner="http://www.kde.org">
-    <UDI>/org/kde/fstab/overlay/</UDI>
-    <isSystemItem>true</isSystemItem>
-   </metadata>
-  </info>
- </separator>
- <separator>
-  <info>
-   <metadata owner="http://www.kde.org">
-    <UDI>/org/freedesktop/UDisks2/block_devices/mmcblk0p1</UDI>
-    <isSystemItem>true</isSystemItem>
-    <uuid>49835e69-c74d-4ac9-9451-1a66d3bf8409</uuid>
-   </metadata>
-  </info>
- </separator>
- <separator>
-  <info>
-   <metadata owner="http://www.kde.org">
-    <UDI>/org/freedesktop/UDisks2/block_devices/nvme0n1p2</UDI>
-    <isSystemItem>true</isSystemItem>
-    <uuid>ca821dd3-9ed5-43b8-8c8e-784901fe21ee</uuid>
-   </metadata>
-  </info>
- </separator>
- <separator>
-  <info>
-   <metadata owner="http://www.kde.org">
-    <UDI>/org/freedesktop/UDisks2/block_devices/nvme0n1p3</UDI>
-    <isSystemItem>true</isSystemItem>
-    <uuid>6f731b44-79e5-4d6f-a790-3dac4e8752f4</uuid>
-   </metadata>
-  </info>
- </separator>
  <bookmark href="remote:/sargas">
   <title>sargas</title>
   <info>
@@ -223,17 +188,6 @@
    </metadata>
    <metadata owner="http://www.kde.org">
     <ID>1778782970/3</ID>
-   </metadata>
-  </info>
- </bookmark>
- <bookmark href="kdeconnect://9de9f17ae4b0472792cede9269b0bdbc/">
-  <title>Pixel 8 Pro</title>
-  <info>
-   <metadata owner="http://freedesktop.org">
-    <bookmark:icon name="kdeconnect"/>
-   </metadata>
-   <metadata owner="http://www.kde.org">
-    <ID>1778782984/1</ID>
    </metadata>
   </info>
  </bookmark>

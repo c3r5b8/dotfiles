@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euo pipefail
+
+cp {{ joinPath .chezmoi.sourceDir "files/user-places.xbel" | quote }} "$HOME/.local/share/user-places.xbel"
+
+echo "created user-places"
