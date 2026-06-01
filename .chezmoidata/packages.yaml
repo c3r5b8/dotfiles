@@ -60,7 +60,6 @@ packages:
     - com.heroicgameslauncher.hgl
     - md.obsidian.Obsidian
     - org.signal.Signal
-    - chat.rocket.RocketChat
     # default
     - org.kde.elisa
     - org.kde.gwenview
