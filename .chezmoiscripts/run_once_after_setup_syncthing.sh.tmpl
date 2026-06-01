@@ -4,7 +4,6 @@
 if ! systemctl is-enabled --quiet "syncthing@c3r5b8"; then
   sudo systemctl enable --now "syncthing@c3r5b8"
   echo "enabled and started syncthing@c3r5b8"
-  sleep 5
 fi
 
 sudo systemctl stop syncthing@c3r5b8
@@ -13,7 +12,7 @@ find "${HOME}/.local/state/syncthing" -mindepth 1 -maxdepth 1 \
     ! -name "cert.pem" \
     -exec rm -rf {} + || true
 sudo systemctl start syncthing@c3r5b8
-
+sleep 5
 declare -A devices=(
   ["shaula"]="NMOAFEJ-JQQ3GP6-BXQHPFR-KKTNQJM-EGBEXQ2-RGSMKHA-OREPZKU-R5BH4Q2"
   ["sargas"]="BWOM2WU-ZRTTBHK-XOP4L4W-SFKKH7W-JMZGCR3-VQANVTU-QKHRWVQ-G2OMZQQ"
