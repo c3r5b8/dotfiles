@@ -71,6 +71,8 @@ packages:
     - org.kde.okular
     - org.kde.skanpage
 host:
+  acrab:
+    - mesa-va-drivers-freeworld
   shaula:
     - intel-media-driver
     # - https://github.com/c3r5b8/dotfiles/raw/refs/heads/main/files/intel-ish-firmware-0.1.rpm
