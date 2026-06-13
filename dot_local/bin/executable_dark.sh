@@ -9,3 +9,6 @@ for instance in $(qdbus-qt6 | grep org.kde.konsole); do
 		qdbus-qt6 "$instance" "$window" org.kde.konsole.Window.setDefaultProfile "Dark"
 	done
 done
+
+ln -sf "/var/home/c3r5b8/.config/btop/themes/dark.theme" "/var/home/c3r5b8/.config/btop/themes/current_theme.theme"
+pkill -12 btop || true

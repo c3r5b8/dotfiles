@@ -1,0 +1,86 @@
+# btop theme - Breeze Dark (KDE)
+# Based on official KDE Breeze Dark color scheme
+
+# Main background, empty for terminal default, need to be empty if you want transparent background
+theme[main_bg]="#202326"
+
+# Main text color
+theme[main_fg]="#fcfcfc"
+
+# Title color for boxes
+theme[title]="#fcfcfc"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#3daee9"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#3daee9"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#1e2227"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#a1a9b1"
+
+# Color of text appearing on top of graphs, i.e uptime and current network graph scaling
+theme[graph_text]="#1d99f3"
+
+# Background color of the percentage meters
+theme[meter_bg]="#292c30"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#da4453"
+
+# CPU, Memory, Network, Proc box outline colors
+theme[cpu_box]="#3daee9"
+theme[mem_box]="#27ae60"
+theme[net_box]="#da4453"
+theme[proc_box]="#2980b9"
+
+# Box divider line and small boxes line color
+theme[div_line]="#4a4f57"
+
+# Temperature graph color (Green -> Orange -> Red)
+theme[temp_start]="#27ae60"
+theme[temp_mid]="#f67400"
+theme[temp_end]="#da4453"
+
+# CPU graph colors (Green -> Blue)
+theme[cpu_start]="#27ae60"
+theme[cpu_mid]="#3daee9"
+theme[cpu_end]="#2980b9"
+
+# Mem/Disk free meter (Green -> Blue)
+theme[free_start]="#27ae60"
+theme[free_mid]="#2980b9"
+theme[free_end]="#3daee9"
+
+# Mem/Disk cached meter (Blue tones)
+theme[cached_start]="#2980b9"
+theme[cached_mid]="#3daee9"
+theme[cached_end]="#8e44ad"
+
+# Mem/Disk available meter (Orange -> Red)
+theme[available_start]="#f67400"
+theme[available_mid]="#da4453"
+theme[available_end]="#c0392b"
+
+# Mem/Disk used meter (Green -> Blue)
+theme[used_start]="#27ae60"
+theme[used_mid]="#2980b9"
+theme[used_end]="#3daee9"
+
+# Download graph colors (Orange -> Red)
+theme[download_start]="#f67400"
+theme[download_mid]="#da4453"
+theme[download_end]="#c0392b"
+
+# Upload graph colors (Green -> Blue)
+theme[upload_start]="#27ae60"
+theme[upload_mid]="#2980b9"
+theme[upload_end]="#3daee9"
+
+# Process box color gradient for threads, mem and cpu usage (Blue gradient)
+theme[process_start]="#2980b9"
+theme[process_mid]="#3daee9"
+theme[process_end]="#8e44ad"
