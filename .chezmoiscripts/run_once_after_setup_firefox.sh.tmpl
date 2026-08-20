@@ -4,11 +4,7 @@ set -e
 SOURCE="{{ .chezmoi.homeDir }}/.config/mozilla/firefox/user.js"
 PROFILES_INI="{{ .chezmoi.homeDir }}/.config/mozilla/firefox/profiles.ini"
 
-PROFILE_PATH=$(awk -F= '
-    /^\[/ { section=$0 }
-    /^Default=1/ { is_default=1 }
-    /^Path=/ && is_default { print $2; exit }
-' "$PROFILES_INI" 2>/dev/null || true)
+PROFILE_PATH=$(awk -F= '/^Default=/ {print $2; exit}' "{{ .chezmoi.homeDir }}/.config/mozilla/firefox/installs.ini")
 
 if [ -z "$PROFILE_PATH" ]; then
     echo "No default Firefox profile found."
