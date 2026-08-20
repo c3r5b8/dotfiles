@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+# hash: {{ include "dot_config/mozilla/firefox/user.js" | sha256sum | comment "# " }}
+
 SOURCE="{{ .chezmoi.homeDir }}/.config/mozilla/firefox/user.js"
 PROFILES_INI="{{ .chezmoi.homeDir }}/.config/mozilla/firefox/profiles.ini"
 
