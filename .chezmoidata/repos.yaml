@@ -5,6 +5,7 @@ repos:
     - "lizardbyte/beta"
     - "peterwu/rendezvous"
     - "birkch/Koi"
+    - "deltacopy/plasma6-applets-kara"
   url:
     tailscale: https://pkgs.tailscale.com/stable/fedora/tailscale.repo
   custom:
@@ -15,4 +16,3 @@ repos:
       enabled=1
       gpgcheck=1
       gpgkey=https://repo.cider.sh/RPM-GPG-KEY
-

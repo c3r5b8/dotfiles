@@ -1,5 +1,4 @@
 var allPanels = panels();
-
 for (var i = 0; i < allPanels.length; i++) {
     allPanels[i].remove();
 }
@@ -26,12 +25,14 @@ kickoff.writeConfig("recentOrdering", "1");
 kickoff.writeConfig("systemFavorites", "suspend\\,logout\\,reboot\\,shutdown");
 kickoff.reloadConfig();
 
-var pager = panel.addWidget("org.kde.plasma.pager");
-pager.currentConfigGroup = ["General"];
-pager.writeConfig("displayedText", "Number");
-pager.writeConfig("showOnlyCurrentScreen", "true");
-pager.writeConfig("wrapPage", "true");
-pager.reloadConfig();
+var kara = panel.addWidget("org.dhruv8sh.kara");
+kara.currentConfigGroup = ["general"];
+kara.writeConfig("highlightOpacityFull", "false");
+kara.writeConfig("highlightType", "3");
+kara.currentConfigGroup = ["type2"];
+kara.writeConfig("labelSource", "0");
+kara.writeConfig("template", "%d");
+kara.reloadConfig();
 
 panel.addWidget("org.kde.plasma.panelspacer");
 

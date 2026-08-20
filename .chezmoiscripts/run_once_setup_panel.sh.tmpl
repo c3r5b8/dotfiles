@@ -1,5 +1,8 @@
+{{ if stat "/usr/share/plasma/plasmoids/org.dhruv8sh.kara/metadata.json" -}}
 #!/usr/bin/env bash
 
 # hash: {{ include "files/panel.js" | sha256sum | comment "# " }}
 
 qdbus-qt6 org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "$(cat {{ joinPath .chezmoi.sourceDir "files/panel.js" | quote }})"
+
+{{- end }}
