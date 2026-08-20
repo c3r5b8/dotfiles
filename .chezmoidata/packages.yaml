@@ -4,7 +4,7 @@ packages:
     - android-tools
     - bat
     - btop
-    # - Cider
+    - Cider
     - clang
     - fastfetch
     - fd-find
