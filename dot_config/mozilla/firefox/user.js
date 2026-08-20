@@ -1,6 +1,7 @@
 user_pref("browser.startup.page", 3);
 user_pref("browser.discovery.enabled", false);
 user_pref("widget.disable-workspace-management", true);
+user_pref("browser.sessionstore.restore_windows_to_virtual_desktop", false);
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.telemetry", false);
 user_pref("app.shield.optoutstudies.enabled", false);
