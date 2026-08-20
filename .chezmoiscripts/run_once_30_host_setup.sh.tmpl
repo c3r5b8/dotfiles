@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -euo pipefail
+
 {{ if eq .chezmoi.hostname "shaula" }}
     INITRAMFS_ENABLED="$( rpm-ostree status --json | jq -r '.deployments[0]["regenerate-initramfs"]')"
     if [[ "$INITRAMFS_ENABLED" != "true" ]]; then
@@ -16,3 +18,21 @@
 #         # sudo rpm-ostree override remove mesa-va-drivers --install mesa-va-drivers-freeworld
 # fi
 # {{ end }}
+{{ if eq .chezmoi.hostname "antares" }}
+DEVICE="/dev/disk/by-id/nvme-CT2000P3SSD8_2342E8810C87-part1"
+MOUNTPOINT="/mnt/games"
+FSTYPE="btrfs"
+OPTIONS="subvol=@,noatime,compress-force=zstd:1,discard=async,space_cache=v2"
+DUMP_PASS="0 0"
+
+FSTAB_LINE="${DEVICE}  ${MOUNTPOINT}  ${FSTYPE}  ${OPTIONS}  ${DUMP_PASS}"
+
+sudo mkdir -p "$MOUNTPOINT"
+
+sudo sed -i "\|[[:space:]]${MOUNTPOINT}[[:space:]]|d" /etc/fstab
+
+echo "$FSTAB_LINE" | sudo tee -a /etc/fstab > /dev/null
+
+sudo systemctl daemon-reload
+sudo mount -a
+{{ end }}
