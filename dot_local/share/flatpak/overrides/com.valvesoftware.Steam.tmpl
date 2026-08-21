@@ -1,0 +1,7 @@
+[System Bus Policy]
+org.freedesktop.NetworkManager=talk
+
+[Context]
+{{- if eq .chezmoi.hostname "antares" }}
+filesystems=/mnt/games
+{{- end }}
