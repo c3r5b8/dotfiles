@@ -1,4 +1,5 @@
 [Daemon]
+LockOnStart=true
 Timeout=2
 
 [Greeter][Wallpaper][org.kde.image][General]
