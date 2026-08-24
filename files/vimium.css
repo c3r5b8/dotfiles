@@ -1,0 +1,218 @@
+:root {
+  --vimium-text: #232629;
+  --vimium-subtext0: #707d8a;
+  --vimium-subtext1: #5c5f77;
+  --vimium-surface2: #bcc0cc;
+  --vimium-surface1: #ccd0da;
+  --vimium-surface0: #e3e5e7;
+  --vimium-base: #eff0f1;
+  --vimium-mantle: #e6e9ef;
+  --vimium-crust: #dce0e8;
+
+  --vimium-foreground-text-color: var(--vimium-text);
+  --vimium-background-text-color: var(--vimium-text);
+  --vimium-foreground-color: var(--vimium-mantle);
+
+  --vimium-accent: AccentColor;
+  --vimium-accent-dark: color-mix(in srgb, AccentColor 85%, black);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --vimium-text: #fcfcfc;
+    --vimium-subtext0: #a1a9b1;
+    --vimium-subtext1: #bac2de;
+    --vimium-surface2: #585b70;
+    --vimium-surface1: #45475a;
+    --vimium-surface0: #292c30;
+    --vimium-base: #202326;
+    --vimium-mantle: #181b1f;
+    --vimium-crust: #111318;
+
+    --vimium-foreground-text-color: var(--vimium-text);
+    --vimium-background-text-color: var(--vimium-text);
+    --vimium-foreground-color: var(--vimium-mantle);
+
+    --vimium-accent: AccentColor;
+    --vimium-accent-dark: color-mix(in srgb, AccentColor 80%, black);
+  }
+}
+
+/* ===================== LINK HINTS ===================== */
+
+/* Base hint style */
+#vimium-hint-marker-container div.internal-vimium-hint-marker,
+#vimium-hint-marker-container div.vimiumHintMarker {
+  padding: 2px 5px;
+  background: var(--vimium-accent);
+  border: 1px solid var(--vimium-accent-dark);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+@media (prefers-color-scheme: light) {
+  #vimium-hint-marker-container div span {
+    color: #1c1f24;
+    text-shadow: none;
+    font-weight: 600;
+  }
+
+  #vimium-hint-marker-container div span.matchingCharacter {
+    color: #4a4d55;
+    font-weight: 700;
+  }
+}
+
+/* === DARK MODE: White text on hints === */
+@media (prefers-color-scheme: dark) {
+  #vimium-hint-marker-container div span {
+    color: white;
+    text-shadow: none;
+    font-weight: 500;
+  }
+
+  #vimium-hint-marker-container div span.matchingCharacter {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+/* ===================== VOMNIBAR ===================== */
+#vomnibar {
+  background: var(--vimium-base);
+  border: 2px solid var(--vimium-accent);
+  border-radius: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  animation: show 180ms cubic-bezier(0.2, 0, 0.2, 1) forwards;
+  max-height: calc(100vh - 80px);
+  overflow: hidden;
+}
+
+@keyframes show {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+#vomnibar input {
+  color: var(--vimium-text);
+  background: var(--vimium-base);
+  border: none;
+  box-shadow: none;
+  padding: 14px 24px;
+  font-size: 15px;
+}
+
+#vomnibar #vomnibar-search-area {
+  background: var(--vimium-base);
+  border: none;
+}
+
+#vomnibar ul {
+  background: var(--vimium-base);
+  border-top: 1px solid var(--vimium-surface0);
+}
+
+#vomnibar li {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--vimium-surface0);
+}
+
+#vomnibar li .source {
+  color: var(--vimium-accent);
+  font-weight: 500;
+}
+
+#vomnibar li em,
+#vomnibar li .title {
+  color: var(--vimium-accent);
+  font-weight: 600;
+}
+
+#vomnibar li .url {
+  color: var(--vimium-subtext0);
+}
+
+#vomnibar li .match {
+  color: var(--vimium-accent);
+  font-weight: 700;
+}
+
+#vomnibar li.selected {
+  background-color: var(--vimium-surface0);
+}
+
+/* ===================== HUD (search / find) ===================== */
+div#hud-container {
+  background: var(--vimium-base);
+  border: 1px solid var(--vimium-surface2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  color: var(--vimium-text);
+}
+
+div#hud-container span#hud-find-input,
+div#hud-container div#hud {
+  color: var(--vimium-text);
+}
+
+/* ===================== TEXT SELECTION ===================== */
+::selection {
+  background-color: color-mix(
+    in srgb,
+    var(--vimium-accent) 35%,
+    transparent
+  ) !important;
+  color: var(--vimium-text) !important;
+}
+
+/* ===================== VIMIUM SETTINGS PAGE ===================== */
+body.vimium-body,
+body.vimium-body header,
+body.vimium-body label {
+  color: var(--vimium-text);
+  background-color: var(--vimium-base);
+}
+
+body.vimium-body button,
+body.vimium-body textarea,
+body.vimium-body input {
+  background-color: var(--vimium-mantle);
+  border-color: var(--vimium-surface2);
+  color: var(--vimium-text);
+}
+
+body.vimium-body button:focus {
+  border-color: var(--vimium-accent);
+  outline: none;
+}
+
+body.vimium-body a {
+  color: var(--vimium-accent);
+}
+
+/* ===================== HELP DIALOG ===================== */
+#dialog {
+  color: var(--vimium-text);
+  background: var(--vimium-mantle);
+  border: 1px solid var(--vimium-surface2);
+}
+
+#dialog .divider {
+  background: var(--vimium-surface2);
+}
+
+#dialog a,
+#dialog span.vim {
+  color: var(--vimium-accent);
+}
+
+#dialog .key,
+body.vimium-body .key {
+  color: var(--vimium-text);
+  background: var(--vimium-base);
+  border-color: var(--vimium-surface1);
+}
