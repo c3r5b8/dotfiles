@@ -1,3 +1,6 @@
+[Daemon]
+Timeout=2
+
 [Greeter][Wallpaper][org.kde.image][General]
 Image=file:///var/home/c3r5b8/.local/share/wallpapers/Greens/
 PreviewImage=file:///var/home/c3r5b8/.local/share/wallpapers/Greens/
