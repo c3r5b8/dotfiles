@@ -1,0 +1,25 @@
+{{- if lookPath "syncthing" -}}
+#!/bin/bash
+set -e
+
+# hash: {{ include "dot_thunderbird/user.js" | sha256sum | comment "# " }}
+
+if [[ ! -f $HOME/.thunderbird/profiles.ini ]]; then
+    timeout 5 thunderbird --headless >/dev/null 2>&1 || true
+fi
+
+SOURCE="{{ .chezmoi.homeDir }}/.thunderbird/user.js"
+
+PROFILE_PATH=$(awk -F= '/^Default=/ {print $2; exit}' "{{ .chezmoi.homeDir }}/.thunderbird/installs.ini")
+
+if [ -z "$PROFILE_PATH" ]; then
+    echo "No default Firefox profile found."
+    exit 0
+fi
+
+TARGET="{{ .chezmoi.homeDir }}/.thunderbird/$PROFILE_PATH/user.js"
+
+cp "$SOURCE" "$TARGET"
+echo "Firefox user.js deployed to: $PROFILE_PATH"
+rm -rf {{ .chezmoi.homeDir }}/thunderbird
+{{ end }}
