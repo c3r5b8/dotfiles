@@ -61,6 +61,7 @@ packages:
     - com.heroicgameslauncher.hgl
     - md.obsidian.Obsidian
     - org.signal.Signal
+    - org.remmina.Remmina
     # default
     - org.kde.elisa
     - org.kde.gwenview
