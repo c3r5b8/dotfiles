@@ -5,7 +5,6 @@ repos:
     - "lizardbyte/beta"
     - "peterwu/rendezvous"
     - "birkch/Koi"
-    - "deltacopy/plasma6-applets-kara"
   url:
     tailscale: https://pkgs.tailscale.com/stable/fedora/tailscale.repo
   custom:

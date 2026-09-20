@@ -26,7 +26,6 @@ packages:
     - nvtop
     - onefetch
     - p7zip
-    - plasma6-applets-kara
     - qbittorrent
     - rclone
     - ripgrep
