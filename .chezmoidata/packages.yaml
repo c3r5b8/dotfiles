@@ -4,7 +4,6 @@ packages:
     - android-tools
     - bat
     - btop
-    - Cider
     - clang
     - fastfetch
     - fd-find
@@ -62,6 +61,7 @@ packages:
     - md.obsidian.Obsidian
     - org.signal.Signal
     - org.remmina.Remmina
+    - sh.cider.Cider
     # default
     - org.kde.elisa
     - org.kde.gwenview
