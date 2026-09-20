@@ -3,54 +3,91 @@ for (var i = 0; i < allPanels.length; i++) {
     allPanels[i].remove();
 }
 
-var panel = new Panel;
-panel.location = "top";
-panel.height = 32;
-panel.alignment = "center";
-panel.floating = false;
-panel.hiding = "none";
-panel.lengthMode = "fill";
-panel.opacity = "translucent";
-panel.screen = 0;
+function basePanel(screenIndex) {
+    var panel = new Panel;
+    panel.location = "top";
+    panel.height = 32;
+    panel.alignment = "center";
+    panel.floating = false;
+    panel.hiding = "none";
+    panel.lengthMode = "fill";
+    panel.opacity = "translucent";
+    panel.screen = screenIndex;
+    return panel;
+}
 
-var kickoff = panel.addWidget("org.kde.plasma.kickoff");
-kickoff.currentConfigGroup = ["General"];
-kickoff.writeConfig("alphaSort", "true");
-kickoff.writeConfig("applicationsDisplay", "0");
-kickoff.writeConfig("favoritesPortedToKAstats", "true");
-kickoff.writeConfig("forceDarkMode", "false");
-kickoff.writeConfig("icon", "start-here-kde-symbolic");
-kickoff.writeConfig("highlightNewlyInstalledApps", "false");
-kickoff.writeConfig("recentOrdering", "1");
-kickoff.writeConfig("systemFavorites", "suspend\\,logout\\,reboot\\,shutdown");
-kickoff.reloadConfig();
+function setupMainPanel(screenIndex) {
+    var panel = basePanel(screenIndex);
 
-var kara = panel.addWidget("org.dhruv8sh.kara");
-kara.currentConfigGroup = ["general"];
-kara.writeConfig("highlightOpacityFull", "false");
-kara.writeConfig("highlightType", "3");
-kara.currentConfigGroup = ["type2"];
-kara.writeConfig("labelSource", "0");
-kara.writeConfig("template", "%d");
-kara.reloadConfig();
+    var kickoff = panel.addWidget("org.kde.plasma.kickoff");
+    kickoff.currentConfigGroup = ["General"];
+    kickoff.writeConfig("alphaSort", "true");
+    kickoff.writeConfig("applicationsDisplay", "0");
+    kickoff.writeConfig("favoritesPortedToKAstats", "true");
+    kickoff.writeConfig("forceDarkMode", "false");
+    kickoff.writeConfig("icon", "start-here-kde-symbolic");
+    kickoff.writeConfig("highlightNewlyInstalledApps", "false");
+    kickoff.writeConfig("recentOrdering", "1");
+    kickoff.writeConfig("systemFavorites", "suspend\\,logout\\,reboot\\,shutdown");
+    kickoff.reloadConfig();
 
-panel.addWidget("org.kde.plasma.panelspacer");
+    panel.addWidget("org.kde.plasma.panelspacer");
 
-var systray = panel.addWidget("org.kde.plasma.systemtray");
-systray.currentConfigGroup = ["General"];
-systray.writeConfig("shownItems", "org.kde.plasma.volume,org.kde.plasma.networkmanagement,org.kde.plasma.bluetooth,org.kde.plasma.battery");
-systray.writeConfig("hiddenItems", "org.kde.plasma.weather");
-systray.reloadConfig();
+    var pager = panel.addWidget("org.kde.plasma.pager");
+    pager.currentConfigGroup = ["General"];
+    pager.writeConfig("displayedText", "Number");
+    pager.writeConfig("showOnlyCurrentScreen", "true");
+    pager.writeConfig("wrapPage", "true");
+    pager.reloadConfig();
 
-var clock = panel.addWidget("org.kde.plasma.digitalclock");
-clock.currentConfigGroup = ["Appearance"];
-clock.writeConfig("dateDisplayFormat", "BesideTime");
-clock.writeConfig("enabledCalendarPlugins", "astronomicalevents");
-clock.writeConfig("showWeekNumbers", "true");
-clock.reloadConfig();
+    panel.addWidget("org.kde.plasma.panelspacer");
+
+    var systray = panel.addWidget("org.kde.plasma.systemtray");
+    systray.currentConfigGroup = ["General"];
+    systray.writeConfig("shownItems", "org.kde.plasma.volume,org.kde.plasma.networkmanagement,org.kde.plasma.bluetooth,org.kde.plasma.battery");
+    systray.writeConfig("hiddenItems", "org.kde.plasma.weather");
+    systray.reloadConfig();
+
+    var clock = panel.addWidget("org.kde.plasma.digitalclock");
+    clock.currentConfigGroup = ["Appearance"];
+    clock.writeConfig("dateDisplayFormat", "BesideTime");
+    clock.writeConfig("enabledCalendarPlugins", "astronomicalevents");
+    clock.writeConfig("showWeekNumbers", "true");
+    clock.reloadConfig();
+}
+
+function setupPagerPanel(screenIndex) {
+    var panel = basePanel(screenIndex);
+    panel.lengthMode = "fill";
+    panel.alignment = "center";
+
+    panel.addWidget("org.kde.plasma.panelspacer");
+
+    var pager = panel.addWidget("org.kde.plasma.pager");
+    pager.currentConfigGroup = ["General"];
+    pager.writeConfig("displayedText", "Number");
+    pager.writeConfig("showOnlyCurrentScreen", "true");
+    pager.writeConfig("wrapPage", "true");
+    pager.reloadConfig();
+
+    panel.addWidget("org.kde.plasma.panelspacer");
+
+    var clock = panel.addWidget("org.kde.plasma.digitalclock");
+    clock.currentConfigGroup = ["Appearance"];
+    clock.writeConfig("dateDisplayFormat", "BesideTime");
+    clock.writeConfig("enabledCalendarPlugins", "astronomicalevents");
+    clock.writeConfig("showWeekNumbers", "true");
+    clock.reloadConfig();
+
+}
+
+setupMainPanel(0);
+
+for (var s = 1; s < screenCount; s++) {
+    setupPagerPanel(s);
+}
 
 var allDesktops = desktops();
-
 for (var i = 0; i < allDesktops.length; i++) {
     var desktop = allDesktops[i];
 
