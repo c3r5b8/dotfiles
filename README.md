@@ -18,6 +18,7 @@ sh -c "$(curl -fsLS https://get.chezmoi.io/lb)" -- init --apply c3r5b8
 - Setup telegram
   - Log in
   - Enable qt feame and hw video decoding, disable "Draw attention to the window"
+- Setup KDE Connect
 
 Setup ssh keys:
 
