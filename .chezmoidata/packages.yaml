@@ -79,3 +79,6 @@ host:
     # - https://github.com/c3r5b8/dotfiles/raw/refs/heads/main/files/intel-ish-firmware-0.1.rpm
   antares:
     - mesa-va-drivers-freeworld
+    - virt-manager
+    - libvirt
+    - qemu-kvm
