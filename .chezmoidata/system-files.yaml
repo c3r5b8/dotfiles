@@ -1,0 +1,38 @@
+systemFiles:
+  - path: /etc/sudoers.d/00_c3r5b8
+    mode: "0440"
+    content: "c3r5b8 ALL=(ALL:ALL) NOPASSWD: ALL"
+  - path: /etc/firefox/policies/policies.json
+    mode: "0644"
+    content: |-
+      {
+        "policies": {
+          "SearchEngines": {
+            "Default": "DuckDuckGo"
+          }
+        }
+      }
+  - path: /etc/locale.conf
+    mode: "0644"
+    content: |-
+      LANG="en_US.UTF-8"
+      LC_TIME="en_IE.UTF-8"
+  - path: /etc/NetworkManager/conf.d/99_rand_mac.conf
+    mode: "0644"
+    hosts: ["antares", "shaula"]
+    content: |-
+      [connection-mac-randomization]
+      wifi.cloned-mac-address=permanent
+      ethernet.cloned-mac-address=permanent
+  - path: /etc/NetworkManager/conf.d/98_wifi_powersave.conf
+    mode: "0644"
+    hosts: ["shaula"]
+    content: |-
+      [connection]
+      wifi.powersave = 2
+  - path: /etc/plasmalogin.conf.d/autologin.conf
+    mode: "0644"
+    content: |-
+      [Autologin]
+      User=c3r5b8
+      Session=plasma.desktop

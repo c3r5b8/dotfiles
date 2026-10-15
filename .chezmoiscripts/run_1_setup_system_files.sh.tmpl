@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+apply_file() {
+  local path=$1
+  local mode=$2
+  local content=$3
+
+  local tmp
+  tmp=$(mktemp)
+  printf '%b' "$content" >"$tmp"
+  if [[ "$content" != *$'\n' ]]; then
+    echo >>"$tmp"
+  fi
+
+  local needs_update=0
+
+  if ! sudo test -f "$path"; then
+    needs_update=1
+  else
+    if ! sudo cmp -s "$tmp" "$path"; then
+      needs_update=1
+    else
+      local current_mode
+      current_mode=$(sudo stat -c '%a' "$path")
+      if [[ $((8#$current_mode)) -ne $((8#$mode)) ]]; then
+        needs_update=1
+      fi
+    fi
+  fi
+
+  if ((needs_update)); then
+    echo "fixing $path"
+    sudo install -D -m "$mode" -o root -g root "$tmp" "$path"
+  fi
+
+  rm -f "$tmp"
+}
+
+{{ range .systemFiles }}
+{{ if or (not (hasKey . "hosts")) (has $.chezmoi.hostname .hosts) }}
+apply_file {{ .path | quote }} {{ .mode | default "0644" | quote }} {{ .content | quote }}
+{{ end }}
+{{ end }}
